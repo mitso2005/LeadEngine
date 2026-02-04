@@ -76,7 +76,7 @@ def enrich_companies(client: ApolloClient, store: LocalDataStore, domains: List[
             time.sleep(2)
     
     print(f"\n✅ Company enrichment complete!")
-'''
+
 def search_people(client: ApolloClient, store: LocalDataStore, domains: List[str], titles: List[str], people_per_company: int = 3):
     """
     Search for people at each company with target titles
@@ -88,20 +88,38 @@ def search_people(client: ApolloClient, store: LocalDataStore, domains: List[str
     
     for domain in domains:
         company = store.get_company(domain)
-        company_name = company['name'] if company else domain
         
-        print(f"\n{company_name}:")
+        if not company:
+            print(f"\n⚠️  Skipping {domain} - not enriched yet")
+            continue
+            
+        company_name = company['name']
+        apollo_id = company.get('apollo_id')
         
-        # Search for people at this company with target titles
+        if not apollo_id:
+            print(f"\n⚠️  Skipping {company_name} - no Apollo ID found")
+            continue
+        
+        print(f"\n{company_name} (ID: {apollo_id}):")
+        
+        # Search for people at this company using organization ID
         result = client.people_search(
-            organization_domains=[domain],
+            organization_ids=[apollo_id],
             person_titles=titles,
             per_page=people_per_company
         )
         
+        # Debug: Check what we got back
         if "error" not in result and "people" in result:
             people = result["people"]
             print(f"  Found {len(people)} people")
+            
+            # Debug first person to see actual company
+            if people and len(people) > 0:
+                first_person = people[0]
+                actual_company = first_person.get('organization', {}).get('name', 'Unknown')
+                if actual_company.lower() != company_name.lower() and actual_company != 'Unknown':
+                    print(f"  ⚠️  WARNING: API returned people from '{actual_company}' instead of '{company_name}'!")
             
             for person_data in people:
                 person = store.save_person(person_data, domain)
@@ -109,7 +127,7 @@ def search_people(client: ApolloClient, store: LocalDataStore, domains: List[str
                 print(f"    ✓ {person['first_name']} {person['last_name']} - {person['title']}")
             
             # Log this search
-            store.log_search("people_search", {"domain": domain, "titles": titles}, len(people))
+            store.log_search("people_search", {"apollo_id": apollo_id, "titles": titles}, len(people))
         else:
             print(f"  ✗ Error: {result.get('error', 'Unknown error')}")
         
@@ -117,7 +135,7 @@ def search_people(client: ApolloClient, store: LocalDataStore, domains: List[str
     
     print(f"\n✅ Found {len(all_people)} people total!")
     return all_people
-
+'''
 def enrich_people(client: ApolloClient, store: LocalDataStore, people: List[dict], reveal_contacts: bool = False):
     """
     Bulk enrich people to get contact details
@@ -198,7 +216,7 @@ def main():
     enrich_companies(client, store, domains)
     
     # PHASE 2: Search for people (120 API calls)
-    # people = search_people(client, store, domains, titles, people_per_company=3)
+    people = search_people(client, store, domains, titles, people_per_company=3)
     
     # PHASE 3: Enrich people (OPTIONAL - 12 API calls + extra credits for contact reveal)
     # Uncomment to enable people enrichment

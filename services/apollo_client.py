@@ -73,7 +73,7 @@ class ApolloClient:
     # ==================== PEOPLE SEARCH ====================
     
     def people_search(self, 
-                     organization_domains: Optional[List[str]] = None,
+                     organization_ids: Optional[List[str]] = None,
                      person_titles: Optional[List[str]] = None,
                      person_seniorities: Optional[List[str]] = None,
                      page: int = 1,
@@ -83,7 +83,7 @@ class ApolloClient:
         Search for people with filters
         
         Args:
-            organization_domains: List of company domains to filter by
+            organization_ids: List of Apollo organization IDs to filter by
             person_titles: List of job titles to filter by
             person_seniorities: List of seniorities (e.g., ["director", "vp", "cxo"])
             page: Page number for pagination
@@ -98,8 +98,8 @@ class ApolloClient:
             "per_page": per_page,
         }
         
-        if organization_domains:
-            data["organization_domains"] = organization_domains
+        if organization_ids:
+            data["organization_ids"] = organization_ids
         
         if person_titles:
             data["person_titles"] = person_titles
@@ -110,7 +110,7 @@ class ApolloClient:
         # Add any additional filters
         data.update(kwargs)
         
-        return self._make_request("POST", "mixed_people/search", data=data)
+        return self._make_request("POST", "mixed_people/api_search", data=data)
     
     # ==================== PEOPLE ENRICHMENT ====================
     

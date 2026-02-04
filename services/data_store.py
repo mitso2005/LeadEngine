@@ -63,6 +63,7 @@ class LocalDataStore:
         
         company_record = {
             "domain": domain,
+            "apollo_id": org.get("id"),  # Apollo organization ID for people search
             "name": org.get("name"),
             "company_phone": org.get("phone"),
             "industry": org.get("industry"),
