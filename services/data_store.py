@@ -72,10 +72,9 @@ class LocalDataStore:
             "city": org.get("city"),
             "short_description": org.get("short_description"),
             "annual_revenue": org.get("organization_revenue"),  # Note: field name is organization_revenue
+            "departmental_headcount": org.get("departmental_head_count"),
             "total_funding": org.get("total_funding"),
             "funding_events": org.get("funding_events"),
-            "technology_names": org.get("technology_names"),
-            "departmental_headcount": org.get("departmental_head_count"),
             "raw_apollo_data": apollo_data,  # Store the full response for future use
             "updated_at": datetime.now().isoformat()
         }
@@ -204,7 +203,12 @@ class LocalDataStore:
                     if key not in ['departmental_headcount'] and isinstance(value, (list, dict)):
                         flat_copy[key] = json.dumps(value)
                 
-                companies_flat.append(flat_copy)
+                # Reorder to put funding fields at the end
+                ordered_copy = {k: v for k, v in flat_copy.items() if k not in ['total_funding', 'funding_events']}
+                ordered_copy['total_funding'] = flat_copy.get('total_funding')
+                ordered_copy['funding_events'] = flat_copy.get('funding_events')
+                
+                companies_flat.append(ordered_copy)
             pd.DataFrame(companies_flat).to_csv(output_path / "companies.csv", index=False)
         
         # Export people
