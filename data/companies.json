@@ -4,7 +4,7 @@
   "Experian": "experian.com.au",
   "Equifax": "equifax.com.au",
   "Morningstar": "morningstar.com.au",
-  "Gartner": "gartner.com.au",
+  "Gartner": "gartner.com.au/en",
   "Block Earner": "blockearner.com.au",
   "Carrington Labs": "carringtonlabs.com",
   "Corporate Alliance Group": "corporatealliance.com",
@@ -15,7 +15,7 @@
   "GBST": "gbst.com",
   "Identitii": "identitii.com",
   "Inlogik": "inlogik.com",
-  "Ingenico": "ingenico.com.au",
+  "Ingenico APAC": "ingenico.com/apac",
   "LoanOptions.ai": "loanoptions.ai",
   "MemberCheck": "membercheck.com",
   "Paylab": "paylab.com.au",
@@ -23,10 +23,10 @@
   "Quickli": "quickli.com.au",
   "Resimac": "resimac.com.au",
   "Zepto": "zepto.com.au",
-  "Bano": "bano.com.au",
-  "Penti": "penti.com.au",
+  "Bano": "banosuperapp.com",
+  "Plenti": "plenti.com.au",
   "MoneyMe": "moneyme.com.au",
-  "Nano Platform": "nanoplatform.com.au",
+  "Nano Platform": "nanoplatform.com",
   "Lumi": "lumi.com.au",
   "Wisr": "wisr.com.au",
   "Superhero": "superhero.com.au",
@@ -37,5 +37,5 @@
   "(Creditor)Watch": "creditorwatch.com.au",
   "MogoPlus": "mogo.com.au",
   "Entsia": "entsia.com",
-  "Pathezro": "pathezro.com"
+  "Pathezro": "pathzero.com"
 }
