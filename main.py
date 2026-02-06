@@ -81,10 +81,10 @@ def enrich_companies(client: ApolloClient, store: LocalDataStore, domains: List[
     
     print(f"\n✅ Company enrichment complete!")
 
-def search_people(client: ApolloClient, store: LocalDataStore, domains: List[str], titles: List[str], people_per_company: int = 3):
+def search_people(client: ApolloClient, store: LocalDataStore, domains: List[str], titles: List[str], people_per_company: int = 5):
     """
     Search for people at each company with target titles
-    ~120 API calls (40 companies × 3 people each, batched)
+    ~120 API calls (40 companies × 5 people each, batched)
     """
     print(f"\n=== SEARCHING FOR PEOPLE ({people_per_company} per company) ===")
     
@@ -232,9 +232,9 @@ def main():
     enrich_companies(client, store, domains)
     
     # PHASE 2: Search for people (120 API calls)
-    people = search_people(client, store, domains, titles, people_per_company=3)
+    people = search_people(client, store, domains, titles, people_per_company=5)
     
-    # PHASE 3: Enrich people (OPTIONAL - 12 API calls + extra credits for contact reveal)
+    # PHASE 5: Enrich people (OPTIONAL - 20 API calls + extra credits for contact reveal)
     # Uncomment to enable people enrichment
     enrich_people(client, store, people, reveal_contacts=True, webhook_url=WEBHOOK_URL)
     
