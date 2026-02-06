@@ -122,7 +122,8 @@ class ApolloClient:
                     email: Optional[str] = None,
                     linkedin_url: Optional[str] = None,
                     reveal_personal_emails: bool = False,
-                    reveal_phone_number: bool = False) -> Dict:
+                    reveal_phone_number: bool = False,
+                    webhook_url: Optional[str] = None) -> Dict:
         """
         Match and enrich a single person
         
@@ -135,6 +136,7 @@ class ApolloClient:
             linkedin_url: Person's LinkedIn URL
             reveal_personal_emails: Whether to reveal personal emails (uses credits)
             reveal_phone_number: Whether to reveal phone numbers (uses credits)
+            webhook_url: Required when reveal_phone_number=True. URL where Apollo sends phone data
         
         Returns:
             Dict containing person data
@@ -143,6 +145,9 @@ class ApolloClient:
             "reveal_personal_emails": str(reveal_personal_emails).lower(),
             "reveal_phone_number": str(reveal_phone_number).lower()
         }
+        
+        if webhook_url:
+            params["webhook_url"] = webhook_url
         
         data = {}
         if first_name:
@@ -163,7 +168,8 @@ class ApolloClient:
     def people_bulk_match(self, 
                          people: List[Dict],
                          reveal_personal_emails: bool = False,
-                         reveal_phone_number: bool = False) -> Dict:
+                         reveal_phone_number: bool = False,
+                         webhook_url: Optional[str] = None) -> Dict:
         """
         Bulk match and enrich multiple people (up to 10 per request)
         
@@ -173,6 +179,7 @@ class ApolloClient:
                    domain, email, linkedin_url
             reveal_personal_emails: Whether to reveal personal emails (uses credits)
             reveal_phone_number: Whether to reveal phone numbers (uses credits)
+            webhook_url: Required when reveal_phone_number=True. URL where Apollo sends phone data
         
         Returns:
             Dict containing bulk match results
@@ -181,6 +188,9 @@ class ApolloClient:
             "reveal_personal_emails": str(reveal_personal_emails).lower(),
             "reveal_phone_number": str(reveal_phone_number).lower()
         }
+        
+        if webhook_url:
+            params["webhook_url"] = webhook_url
         
         data = {"details": people}
         

@@ -4,8 +4,12 @@ from pathlib import Path
 import requests
 from services.apollo_client import ApolloClient, APOLLO_API_KEY
 from services.data_store import LocalDataStore
-from typing import List
+from typing import List, Optional
 import time
+import os
+
+# Webhook URL for receiving phone numbers from Apollo
+WEBHOOK_URL = os.getenv("WEBHOOK_URL", "https://webhook.site/55dac724-e0b4-458e-8e20-b42ab21fb2b4")  # Replace with your webhook.site URL
 
 def load_companies() -> dict:
     """Load companies from data/companies.json"""
@@ -135,14 +139,20 @@ def search_people(client: ApolloClient, store: LocalDataStore, domains: List[str
     
     print(f"\n✅ Found {len(all_people)} people total!")
     return all_people
-'''
-def enrich_people(client: ApolloClient, store: LocalDataStore, people: List[dict], reveal_contacts: bool = False):
+
+def enrich_people(client: ApolloClient, store: LocalDataStore, people: List[dict], reveal_contacts: bool = False, webhook_url: Optional[str] = None):
     """
     Bulk enrich people to get contact details
     ~12 API calls (120 people ÷ 10 per batch)
     WARNING: Setting reveal_contacts=True uses additional credits
+    Note: Phone numbers are delivered asynchronously to webhook_url
     """
     print(f"\n=== ENRICHING PEOPLE (reveal_contacts={reveal_contacts}) ===")
+    if reveal_contacts and webhook_url:
+        print(f"📞 Phone numbers will be sent to: {webhook_url}")
+        print(f"⚠️  This will use API credits!")
+    elif reveal_contacts:
+        print(f"⚠️  This will use API credits!")
     
     batch_size = 10
     batches = [people[i:i + batch_size] for i in range(0, len(people), batch_size)]
@@ -150,23 +160,29 @@ def enrich_people(client: ApolloClient, store: LocalDataStore, people: List[dict
     for idx, batch in enumerate(batches, 1):
         print(f"\nBatch {idx}/{len(batches)}: {len(batch)} people")
         
-        # Prepare bulk match data
+        # Prepare bulk match data using Apollo IDs (more reliable than name matching)
         match_details = []
         for person in batch:
             match_details.append({
-                "first_name": person["first_name"],
-                "last_name": person["last_name"],
-                "domain": person["company_domain"]
+                "id": person["apollo_id"]  # Use Apollo ID for exact matching
             })
         
         # Bulk match/enrich
         result = client.people_bulk_match(
             people=match_details,
             reveal_personal_emails=reveal_contacts,
-            reveal_phone_number=reveal_contacts
+            reveal_phone_number=reveal_contacts,
+            webhook_url=webhook_url if reveal_contacts else None
         )
         
         if "error" not in result and "matches" in result:
+            # Debug: Check first match structure
+            if idx == 1 and len(result["matches"]) > 0 and result["matches"][0]:
+                first_match = result["matches"][0]
+                print(f"  DEBUG - First match keys: {list(first_match.keys())[:15]}")
+                print(f"  DEBUG - Has email: {first_match.get('email')}")
+                print(f"  DEBUG - Has phone_numbers: {first_match.get('phone_numbers')}")
+            
             for match_data in result["matches"]:
                 if match_data:  # Some matches may be None
                     person = store.save_person(match_data)
@@ -179,7 +195,7 @@ def enrich_people(client: ApolloClient, store: LocalDataStore, people: List[dict
         time.sleep(2)  # Rate limiting
     
     print(f"\n✅ People enrichment complete!")
-'''
+
 '''
 def main():
     url = "https://api.apollo.io/api/v1/organizations/enrich?domain=judo.bank"
@@ -220,7 +236,7 @@ def main():
     
     # PHASE 3: Enrich people (OPTIONAL - 12 API calls + extra credits for contact reveal)
     # Uncomment to enable people enrichment
-    # enrich_people(client, store, people, reveal_contacts=False)
+    enrich_people(client, store, people, reveal_contacts=True, webhook_url=WEBHOOK_URL)
     
     # Show statistics
     print("\n" + "="*50)

@@ -1,72 +1,81 @@
 apollo_id,first_name,last_name,email,phone_number,title,seniority,company_domain,company_name,linkedin_url,updated_at,created_at
-65d868b5025c530001b92cd6,David,,,,Head of Risk Operations and Governance,,judo.bank,Judo Bank,,2026-02-04T17:27:37.438670,2026-02-04T17:18:03.004031
-5ff95553176b0a0001745f5e,Thomas,,,,Head of Data Architecture & Governance,,judo.bank,Judo Bank,,2026-02-04T17:27:37.442468,2026-02-04T17:18:03.005505
-55705110736964540a5a1700,Sophie,,,,Project Manager,,judo.bank,Judo Bank,,2026-02-04T17:27:37.446183,2026-02-04T17:18:03.006158
-60db1ddd9a1c950001f53f04,Rebecca,,,,Head of Procurement,,prospa.com,Prospa,,2026-02-04T17:27:40.905875,2026-02-04T17:18:06.087980
-65525eae6f4bc60001eec709,Jin,,,,Head of Data & Analytics,,prospa.com,Prospa,,2026-02-04T17:27:40.913280,2026-02-04T17:18:06.089381
-55710ac4736964784c4a0500,Andriy,,,,Head of Data and Analytics,,prospa.com,Prospa,,2026-02-04T17:27:40.920177,2026-02-04T17:18:06.090436
-6153dfac1a7eee00010d09f1,Jyoti,,,,Project Development Manager,,experian.com.au,illion,,2026-02-04T17:27:43.927101,2026-02-04T17:18:09.120915
-63dba125cbca890001035298,Merlin,,,,General Manager,,experian.com.au,illion,,2026-02-04T17:27:43.933777,2026-02-04T17:18:09.123203
-5f74080bf96baf0001b6324d,Calvin,,,,Project Manager,,experian.com.au,illion,,2026-02-04T17:18:09.124360,2026-02-04T17:18:09.124367
-609c98c2b4b83b000142b695,Britt,,,,Head of Data and AI Enablement,,equifax.com.au,Equifax Australia,,2026-02-04T17:27:47.021996,2026-02-04T17:18:12.105987
-607bec60c6edf000015c823d,Asad,,,,"General Manager, Engineering",,equifax.com.au,Equifax Australia,,2026-02-04T17:27:47.025674,2026-02-04T17:18:12.108439
-5efeacf1040d0e015869161a,Juanita,,,,Program Manager,,equifax.com.au,Equifax Australia,,2026-02-04T17:27:47.029158,2026-02-04T17:18:12.109926
-682a9b5e0a711400017e43a0,Rajini,,,,Chief Technology Officer,,carringtonlabs.com,Carrington Labs,,2026-02-04T17:27:53.173669,2026-02-04T17:18:18.138428
-5fc0e418cd1f540001da3746,Steven,,,,Head of Data Science,,carringtonlabs.com,Carrington Labs,,2026-02-04T17:27:53.180364,2026-02-04T17:18:18.141035
-54a5b4dc74686938acfabca1,Bruce,,,,CTO & Co-Founder,,corporatealliance.com,Corporate Alliance Group,,2026-02-04T17:27:56.241197,2026-02-04T17:18:21.187541
-5b315d9fa6da98ffe7ba9b0d,Priyanka,,,,Program Manager - FX,,corporatealliance.com,Corporate Alliance Group,,2026-02-04T17:27:56.247485,2026-02-04T17:18:21.190126
-627f3524f336ca0001f8fea2,Harpreet,,,,Risk & Compliance Manager,,corporatealliance.com,Corporate Alliance Group,,2026-02-04T17:27:56.253328,2026-02-04T17:18:21.191858
-57d858ffa6da98785fd73454,Pratheba,,,,Project Manager Android,,lakeba.com,Lakeba,,2026-02-04T17:28:03.112056,2026-02-04T17:18:27.313254
-612940f2349f5e000116c0bd,Nishadh,,,,Technical Project Manager,,lakeba.com,Lakeba,,2026-02-04T17:28:03.119679,2026-02-04T17:18:27.316536
-5d46cf36f65125cd814b11f2,Gopalakrishnan,,,,Technical Project Manager,,lakeba.com,Lakeba,,2026-02-04T17:28:03.126762,2026-02-04T17:18:27.318666
-66d01f87731ee50001f0e8f2,Iain,,,,Head of Information Technology,,flarehr.com,Flare,,2026-02-04T17:28:06.233724,2026-02-04T17:18:30.377927
-61b47660afdde7000181894a,Jamie,,,,General Manager,,flarehr.com,Flare,,2026-02-04T17:28:06.240749,2026-02-04T17:18:30.379061
-64968d9b50ec570001370566,Liz,,,,Chief Product and Technology Officer,,flarehr.com,Flare,,2026-02-04T17:28:06.247123,2026-02-04T17:18:30.380043
-6024de750c21500001d2db91,Pierce,,,,Chief Technology Officer - WealthConnect,,gbst.com,GBST,,2026-02-04T17:28:09.285951,2026-02-04T17:18:33.456147
-60b5008a88d23500017fc3c9,Adrian,,,,Program Manager,,gbst.com,GBST,,2026-02-04T17:28:09.291540,2026-02-04T17:18:33.459645
-5e79a4c504a2780001e205ed,Louise,,,,Program Manager,,gbst.com,GBST,,2026-02-04T17:28:09.296773,2026-02-04T17:18:33.462085
-57d58041a6da98538e81a916,Greg,,,,Senior Project Manager,,identitii.com,Identitii,,2026-02-04T17:28:12.317010,2026-02-04T17:18:36.496956
-60ee9a1291c3830001e29890,Kristan,,,,Chief Technology Officer,,inlogik.com,Inlogik,,2026-02-04T17:28:15.305804,2026-02-04T17:18:39.468442
+65d868b5025c530001b92cd6,David,McNabb,,,Head of Risk Operations and Governance,head,www.judo.bank,Judo Bank,http://www.linkedin.com/in/david-mcnabb-74b38555,2026-02-06T12:32:54.209556,2026-02-04T17:18:03.004031
+5ff95553176b0a0001745f5e,Thomas,Janssen,thomas.janssen@judo.bank,,Head of Data Architecture & Governance,head,www.judo.bank,Judo Bank,http://www.linkedin.com/in/thomas-janssen-6704901,2026-02-06T12:32:54.217439,2026-02-04T17:18:03.005505
+55705110736964540a5a1700,Sophie,,,,Project Manager,,judo.bank,Judo Bank,,2026-02-06T09:58:58.343861,2026-02-04T17:18:03.006158
+60db1ddd9a1c950001f53f04,Rebecca,Neilson,rebecca.neilson@prospa.com,,Head of Procurement,head,www.prospa.com,Prospa,http://www.linkedin.com/in/rebecca-neilson-0089b430,2026-02-06T12:32:54.230572,2026-02-04T17:18:06.087980
+65525eae6f4bc60001eec709,Jin,Foo,jin.foo@prospa.com,,Head of Data & Analytics,head,www.prospa.com,Prospa,http://www.linkedin.com/in/eu-jin-foo,2026-02-06T12:32:54.236975,2026-02-04T17:18:06.089381
+55710ac4736964784c4a0500,Andriy,Kapustin,andriy.kapustin@prospa.com,,Head of Data and Analytics,head,www.prospa.com,Prospa,http://www.linkedin.com/in/andriy-kapustin-98a0964,2026-02-06T12:32:54.244829,2026-02-04T17:18:06.090436
+6153dfac1a7eee00010d09f1,Jyoti,Hande,jyoti.hande@illiondts.com,,Project Development Manager,manager,www.experian.com.au,illion,http://www.linkedin.com/in/jyoti-hande,2026-02-06T12:32:54.266492,2026-02-04T17:18:09.120915
+63dba125cbca890001035298,Merlin,Cool,merlin.cool@illion.com.au,,General Manager,manager,www.experian.com.au,illion,http://www.linkedin.com/in/merlin-cool-34581a200,2026-02-06T12:32:54.252289,2026-02-04T17:18:09.123203
+5f74080bf96baf0001b6324d,Calvin,,,,Project Manager,,experian.com.au,illion,,2026-02-06T09:59:04.304083,2026-02-04T17:18:09.124367
+609c98c2b4b83b000142b695,Britt,Ekrol,,,Head of Data and AI Enablement,head,www.equifax.com.au,Equifax Australia,http://www.linkedin.com/in/britt-ekrol-0042315,2026-02-06T12:32:54.273237,2026-02-04T17:18:12.105987
+607bec60c6edf000015c823d,Asad,Nasir,asad.nasir@veda.com.au,,"General Manager, Engineering",manager,www.equifax.com.au,Equifax Australia,http://www.linkedin.com/in/asad-nasir,2026-02-06T12:32:58.364992,2026-02-04T17:18:12.108439
+5efeacf1040d0e015869161a,Juanita,Jordan,juanita.jordan@equifax.com.au,,Program Manager,manager,www.equifax.com.au,Equifax Australia,http://www.linkedin.com/in/juanita-jordan-8a38b9b,2026-02-06T12:32:58.381694,2026-02-04T17:18:12.109926
+682a9b5e0a711400017e43a0,Rajini,Carpenter,rajini.carpenter@carringtonlabs.com,,Chief Technology Officer,c_suite,www.carringtonlabs.com,Carrington Labs,http://www.linkedin.com/in/rajcarpi,2026-02-06T12:32:58.394867,2026-02-04T17:18:18.138428
+5fc0e418cd1f540001da3746,Steven,Wood,,,Head of Data Science,head,www.carringtonlabs.com,Carrington Labs,http://www.linkedin.com/in/steven-wood-0a76492b,2026-02-06T12:32:58.406130,2026-02-04T17:18:18.141035
+54a5b4dc74686938acfabca1,Bruce,Song,bruce.song@corporatealliance.com,,CTO & Co-Founder,founder,www.corporatealliance.com,Corporate Alliance Group,http://www.linkedin.com/in/bruce-song-7991341a,2026-02-06T12:32:58.416288,2026-02-04T17:18:21.187541
+5b315d9fa6da98ffe7ba9b0d,Priyanka,Mehta,priyanka.mehta@corporatealliance.com,,Program Manager - FX,manager,www.corporatealliance.com,Corporate Alliance Group,http://www.linkedin.com/in/priyanka-mehta-a8093997,2026-02-06T12:32:58.425593,2026-02-04T17:18:21.190126
+627f3524f336ca0001f8fea2,Harpreet,Chida,harpreet.chida@cafx.com,,Risk & Compliance Manager,manager,www.corporatealliance.com,Corporate Alliance Group,http://www.linkedin.com/in/harpreet-chida-cams-656634140,2026-02-06T12:32:58.434102,2026-02-04T17:18:21.191858
+57d858ffa6da98785fd73454,Pratheba,,,,Project Manager Android,,lakeba.com,Lakeba,,2026-02-06T09:59:22.323865,2026-02-04T17:18:27.313254
+612940f2349f5e000116c0bd,Nishadh,,,,Technical Project Manager,,lakeba.com,Lakeba,,2026-02-06T09:59:22.331759,2026-02-04T17:18:27.316536
+5d46cf36f65125cd814b11f2,Gopalakrishnan,,,,Technical Project Manager,,lakeba.com,Lakeba,,2026-02-06T09:59:22.338230,2026-02-04T17:18:27.318666
+66d01f87731ee50001f0e8f2,Iain,Ferguson,iain.ferguson@flarehr.com,,Head of Information Technology,head,www.flarehr.com,Flare,http://www.linkedin.com/in/irferguson,2026-02-06T12:32:58.449619,2026-02-04T17:18:30.377927
+61b47660afdde7000181894a,Jamie,Micic,jamie.micic@flarehr.com,,General Manager,manager,www.flarehr.com,Flare,http://www.linkedin.com/in/jamie-micic,2026-02-06T12:32:58.457095,2026-02-04T17:18:30.379061
+64968d9b50ec570001370566,Liz,Crawford,liz.crawford@flarehr.com,,Chief Product and Technology Officer,c_suite,www.flarehr.com,Flare,http://www.linkedin.com/in/liz-crawford-a3603110,2026-02-06T12:33:02.367570,2026-02-04T17:18:30.380043
+6024de750c21500001d2db91,Pierce,Wittke,pierce.wittke@gbst.com,,Chief Technology Officer,c_suite,www.gbst.com,GBST,http://www.linkedin.com/in/pierce-wittke-471113b,2026-02-06T12:33:02.388997,2026-02-04T17:18:33.456147
+60b5008a88d23500017fc3c9,Adrian,Tovey,adrian.tovey@gbst.com,,Program Manager,manager,www.gbst.com,GBST,http://www.linkedin.com/in/atovey99,2026-02-06T12:33:02.405172,2026-02-04T17:18:33.459645
+5e79a4c504a2780001e205ed,Louise,Farren,louise.farren@gbst.com,,Program Manager,manager,www.gbst.com,GBST,http://www.linkedin.com/in/louise-farren-22b75023a,2026-02-06T12:33:02.418705,2026-02-04T17:18:33.462085
+57d58041a6da98538e81a916,Greg,,,,Senior Project Manager,,identitii.com,Identitii,,2026-02-06T09:59:31.289060,2026-02-04T17:18:36.496956
+60ee9a1291c3830001e29890,Kristan,Vingrys,kristan.vingrys@inlogik.com,,Chief Technology Officer,c_suite,www.inlogik.com,Inlogik,http://www.linkedin.com/in/kristanvingrys,2026-02-06T12:33:02.430331,2026-02-04T17:18:39.468442
 67a9df2c10684900017eac06,Ash,,,,Engineering Manager,,inlogik.com,Inlogik,,2026-02-04T17:28:15.312613,2026-02-04T17:18:39.471578
-54a4fc9e7468692abf538a73,Kim,,,,Project Manager,,inlogik.com,Inlogik,,2026-02-04T17:28:15.318511,2026-02-04T17:18:39.474610
-5d69f40680f93e89cc2d4563,Nirlep,,,,Chief Technology Officer,,loanoptions.ai,LoanOptions.ai,,2026-02-04T17:28:18.355466,2026-02-04T17:18:42.566943
-63a1aa038b2e520001e229c0,Mugisha,,,,Sales and Business Development Manager,,membercheck.com,MemberCheck,,2026-02-04T17:28:21.378822,2026-02-04T17:18:45.632647
-5d48346080f93e1118251194,Taha,,,,Senior Sales and Business Development Manager,,membercheck.com,MemberCheck,,2026-02-04T17:28:21.385912,2026-02-04T17:18:45.634210
-60c31728b6ea78000177f1d9,Mei,,,,Head of Solution Development and Delivery - Risk & Compliance,,membercheck.com,MemberCheck,,2026-02-04T17:28:21.392146,2026-02-04T17:18:45.635507
-5ae25aa6a6da984d5a714f4e,Ankit,,,,Business Development Manager,,pokitpal.com,PokitPal,,2026-02-04T17:28:27.578075,2026-02-04T17:18:51.672810
-60fed2d34370930001e1c61b,Steven,,,,"Head of Data, AI and Architecture",,resimac.com.au,Resimac,,2026-02-04T17:28:33.837322,2026-02-04T17:18:57.781058
-614d8e9ded7b2e000111c2eb,Kane,,,,Program Manager,,resimac.com.au,Resimac,,2026-02-04T17:28:33.846109,2026-02-04T17:18:57.785618
-54a525ae7468692fa22f1e81,Daniel,,,,Platform Engineering Manager,,resimac.com.au,Resimac,,2026-02-04T17:28:33.852257,2026-02-04T17:18:57.789006
-611c88c38478b50001f407d9,Rich,,,,Chief Technology Officer,,zepto.com.au,Zepto,,2026-02-04T17:28:36.861599,2026-02-04T17:19:00.790080
-54a4dfbf7468693b8c5d2d6a,Zac,,,,Head of Risk & Compliance,,zepto.com.au,Zepto,,2026-02-04T17:28:36.868268,2026-02-04T17:19:00.791678
-6948f004d495aa0001975011,Andrew,,,,Engineering Manager,,zepto.com.au,Zepto,,2026-02-04T17:28:36.875253,2026-02-04T17:19:00.792918
-60fb8339ad0115000147ff8b,Kym,,,,Chief Technology Officer,,plenti.com.au,Plenti,,2026-02-04T17:28:40.071154,2026-02-04T17:19:03.776145
-54a7d2ad7468696de7cc0853,Grant,,,,Head of Risk & Compliance,,plenti.com.au,Plenti,,2026-02-04T17:28:40.078216,2026-02-04T17:19:03.781283
+54a4fc9e7468692abf538a73,Kim,,,,Project Manager,,inlogik.com,Inlogik,,2026-02-06T09:59:34.321620,2026-02-04T17:18:39.474610
+5d69f40680f93e89cc2d4563,Nirlep,Adhikari,nirlep@loanoptions.ai,,Chief Technology Officer,c_suite,www.loanoptions.ai,LoanOptions.ai,http://www.linkedin.com/in/nirlep-adhikari,2026-02-06T12:33:02.460866,2026-02-04T17:18:42.566943
+63a1aa038b2e520001e229c0,Mugisha,Habib,mugisha.habib@membercheck.com,,,,www.nexiant.ai,Nexiant®,http://www.linkedin.com/in/mugishahabib,2026-02-06T12:33:02.471302,2026-02-04T17:18:45.632647
+5d48346080f93e1118251194,Taha,Boutorabi,taha@membercheck.com,,Senior Sales and Business Development Manager,manager,www.membercheck.com,MemberCheck,http://www.linkedin.com/in/tahaboutorabi,2026-02-06T12:33:02.481096,2026-02-04T17:18:45.634210
+60c31728b6ea78000177f1d9,Mei,Chua,mei@membercheck.com,,Product Manager at Member Check and Development Manager,manager,www.membercheck.com,MemberCheck,http://www.linkedin.com/in/mei-chua-9b10375,2026-02-06T12:33:06.403499,2026-02-04T17:18:45.635507
+5ae25aa6a6da984d5a714f4e,Ankit,Mehta,ankit.mehta@pokitpal.com,,Founder and Owner,owner,www.pokitpal.com,PokitPal,http://www.linkedin.com/in/ankit-mehta-4b01747a,2026-02-06T12:33:06.429455,2026-02-04T17:18:51.672810
+60fed2d34370930001e1c61b,Steven,Mellare,steven.mellare@resimac.com.au,,"Head of Data, AI and Architecture",head,www.resimac.com.au,Resimac,http://www.linkedin.com/in/stevemellare,2026-02-06T12:33:06.448342,2026-02-04T17:18:57.781058
+614d8e9ded7b2e000111c2eb,Kane,Bligh,kane.bligh@resimac.com.au,,Program Manager,manager,www.resimac.com.au,Resimac,http://www.linkedin.com/in/kane-bligh-36552914,2026-02-06T12:33:06.463828,2026-02-04T17:18:57.785618
+54a525ae7468692fa22f1e81,Daniel,Everett,daniel.everett@resimac.com.au,,Platform Engineering Manager,manager,www.resimac.com.au,Resimac,http://www.linkedin.com/in/danieleverett1,2026-02-06T12:33:06.477214,2026-02-04T17:18:57.789006
+611c88c38478b50001f407d9,Rich,Miller,rich.miller@zepto.com.au,,Chief Technology Officer,c_suite,www.zepto.com.au,Zepto,http://www.linkedin.com/in/richardmillerwww,2026-02-06T12:33:06.489498,2026-02-04T17:19:00.790080
+54a4dfbf7468693b8c5d2d6a,Zac,Evans,zac.evans@zepto.com.au,,Head of Risk & Compliance,head,www.zepto.com.au,Zepto,http://www.linkedin.com/in/zacevans1,2026-02-06T12:33:06.502108,2026-02-04T17:19:00.791678
+6948f004d495aa0001975011,Andrew,McIntosh,andrew.mcintosh@zepto.com.au,,Engineering Manager,manager,www.zepto.com.au,Zepto,http://www.linkedin.com/in/andrew-mcintosh-26992059,2026-02-06T12:33:06.515062,2026-02-04T17:19:00.792918
+60fb8339ad0115000147ff8b,Kym,McGain,kym.mcgain@plenti.com.au,,Chief Technology Officer,c_suite,www.plenti.com.au,Plenti,http://www.linkedin.com/in/kymmcgain,2026-02-06T12:33:06.531047,2026-02-04T17:19:03.776145
+54a7d2ad7468696de7cc0853,Grant,Cura,grant.cura@plenti.com.au,,Head of Risk & Compliance,head,www.plenti.com.au,Plenti,http://www.linkedin.com/in/grant-cura-6849ba30,2026-02-06T12:33:06.548936,2026-02-04T17:19:03.781283
 601914db0ef9cd0001702c6c,Shyamal,,,,Senior Engineering Manager,,plenti.com.au,Plenti,,2026-02-04T17:28:40.085358,2026-02-04T17:19:03.785471
-673aa9ada0af6200019969a7,Fred,,,,Chief Technology Officer,,moneyme.com.au,MONEYME,,2026-02-04T17:28:43.245685,2026-02-04T17:19:06.801894
-6517cca31b7b680001f86e02,Xiaofeng,,,,Head of Data Intelligence,,moneyme.com.au,MONEYME,,2026-02-04T17:28:43.252722,2026-02-04T17:19:06.806934
-66a0e463b242390001296837,Marc,,,,Business Development Manager,,moneyme.com.au,MONEYME,,2026-02-04T17:28:43.259830,2026-02-04T17:19:06.811002
-610a2e3eb7b76c0001756279,Kevin,,,,Chief Technology & Data Officer,,nanoplatform.com,Nano Platform,,2026-02-04T17:28:46.316555,2026-02-04T17:19:09.900721
-607458c812ed1a0001e33aae,Paul,,,,Chief Technology Officer,,lumi.com.au,Lumi,,2026-02-04T17:28:49.384021,2026-02-04T17:19:12.980772
-645a3a61db395b00017c7de4,Adriana,,,,General Manager,,lumi.com.au,Lumi,,2026-02-04T17:28:49.390834,2026-02-04T17:19:12.985810
-64805f75112cd80001c82d77,Adolfo,,,,General Manager,,lumi.com.au,Lumi,,2026-02-04T17:28:49.396914,2026-02-04T17:19:12.990227
-54a5d4927468692abf422fac,Amanda,,,,Program Manager,,wisr.com.au,Wisr,,2026-02-04T17:28:52.459270,2026-02-04T17:19:15.959991
-54a5a15574686938ac04899e,Paige,,,,Business Development Manager,,wisr.com.au,Wisr,,2026-02-04T17:28:52.465993,2026-02-04T17:19:15.961974
-613061ec4dd26600019169b2,Rumesh,,,,Business Development Manager,,wisr.com.au,Wisr,,2026-02-04T17:28:52.472421,2026-02-04T17:19:15.963580
-6116c6f706240500014bc97b,Wayne,,,,"Co-Founder, CTO",,superhero.com.au,Superhero,,2026-02-04T17:28:55.530351,2026-02-04T17:19:18.988836
-6017df287683c300014dccb4,John,,,,Head of Data and Analytics,,superhero.com.au,Superhero,,2026-02-04T17:28:55.537960,2026-02-04T17:19:18.994351
-54a40c0574686938acfd6a28,Betty,,,,Head of Risk and Compliance,,raizinvest.com.au,Raiz Invest,,2026-02-04T17:28:58.598681,2026-02-04T17:19:22.092139
-54a2ade674686930c2f01535,Marcin,,,,Group CTO,,raizinvest.com.au,Raiz Invest,,2026-02-04T17:28:58.605473,2026-02-04T17:19:22.098064
-660e5fec2d983c0006d1ded1,LU,,,,Snr. Project Manager,,webull.com.au,Webull Securities Australia,,2026-02-04T17:29:01.779980,2026-02-04T17:19:25.233457
-62d134e35899370001599aac,Leon,,,,Business Development Manager,,webull.com.au,Webull Securities Australia,,2026-02-04T17:29:01.787397,2026-02-04T17:19:25.240126
-61144b01b9da810001b3283d,Izolda,,,,Chief Technology Officer,,curve.com,Curve,,2026-02-04T17:29:04.805652,2026-02-04T17:19:28.249929
-645cb8c289e67c00019fb2ab,Gordon,,,,Engineering Manager,,curve.com,Curve,,2026-02-04T17:29:04.813267,2026-02-04T17:19:28.252284
-68d9ff57aef5150001e74f28,Rachel,,,,Project Manager,,curve.com,Curve,,2026-02-04T17:29:04.819865,2026-02-04T17:19:28.254572
-60f0864aaaf04600016485f0,Joseph,,,,Chief Technology Officer,,creditorwatch.com.au,CreditorWatch,,2026-02-04T17:29:07.924640,2026-02-04T17:19:31.229366
-54a3253074686930c2bfe057,Dennis,,,,Head of Data,,creditorwatch.com.au,CreditorWatch,,2026-02-04T17:29:07.931820,2026-02-04T17:19:31.235810
-54a2a2687468693cdd28a531,Arun,,,,Engineering Manager,,creditorwatch.com.au,CreditorWatch,,2026-02-04T17:29:07.937848,2026-02-04T17:19:31.241233
-557048347369643880ec6200,Vanja,,,,Senior Project Program Manager,,entsia.com,Entsia,,2026-02-04T17:29:13.979503,2026-02-04T17:19:37.263816
-54a2282c74686930c241ae11,Pasquale,,,,Delivery Manager / IT Program Manager,,entsia.com,Entsia,,2026-02-04T17:29:13.986868,2026-02-04T17:19:37.270709
-54a72f8a7468696220983a1d,Angela,,,,Project Delivery Manager,,entsia.com,Entsia,,2026-02-04T17:29:13.993047,2026-02-04T17:19:37.276388
-614081b18a189f000179a5be,Charbel,,,,Co-Founder and CTO,,pathzero.com,Pathzero,,2026-02-04T17:29:17.028671,2026-02-04T17:19:40.321921
+673aa9ada0af6200019969a7,Fred,Relenas,,,Chief Technology Officer,c_suite,www.moneyme.com.au,MONEYME,http://www.linkedin.com/in/fred-r-9b95a7209,2026-02-06T12:33:10.426364,2026-02-04T17:19:06.801894
+6517cca31b7b680001f86e02,Xiaofeng,Lang,xiaofeng@moneyme.com.au,,Head of Data Intelligence,head,www.moneyme.com.au,MONEYME,http://www.linkedin.com/in/xiaofeng-aaron-lang,2026-02-06T12:33:10.447573,2026-02-04T17:19:06.806934
+66a0e463b242390001296837,Marc,Robison,marc.robison@moneyme.com.au,,Business Development Manager,manager,www.moneyme.com.au,MONEYME,http://www.linkedin.com/in/marc-robison-951a16290,2026-02-06T12:33:10.464848,2026-02-04T17:19:06.811002
+610a2e3eb7b76c0001756279,Kevin,Branley,kevin.branley@nanoplatform.com,,Chief Technology & Data Officer,c_suite,www.nanoplatform.com,Nano Platform,http://www.linkedin.com/in/kevin-branley-00843a63,2026-02-06T12:33:10.480384,2026-02-04T17:19:09.900721
+607458c812ed1a0001e33aae,Paul,Pagnan,paul@lumi.com.au,,Chief Technology Officer,c_suite,www.lumi.com.au,Lumi,http://www.linkedin.com/in/paulpagnan,2026-02-06T12:33:10.495244,2026-02-04T17:19:12.980772
+645a3a61db395b00017c7de4,Adriana,Lopes,,,General Manager,manager,www.lumi.com.au,Lumi,http://www.linkedin.com/in/adriana-lopes-b48039128,2026-02-06T12:33:10.510959,2026-02-04T17:19:12.985810
+64805f75112cd80001c82d77,Adolfo,De La Garza,,,General Manager,manager,www.lumi.com.au,Lumi,http://www.linkedin.com/in/adolfo-de-la-garza-b65b9919a,2026-02-06T12:33:10.525269,2026-02-04T17:19:12.990227
+54a5d4927468692abf422fac,Amanda,Neilson,a.neilson@wisr.com.au,,Program Manager,manager,www.wisr.com.au,Wisr,http://www.linkedin.com/in/amandalneilson,2026-02-06T12:33:10.539303,2026-02-04T17:19:15.959991
+54a5a15574686938ac04899e,Paige,Hammond,p.hammond@wisr.com.au,,Business Development Manager,manager,www.wisr.com.au,Wisr,http://www.linkedin.com/in/paige-hammond-77238b9b,2026-02-06T12:33:10.553562,2026-02-04T17:19:15.961974
+613061ec4dd26600019169b2,Rumesh,Gokarella,r.gokarella@wisr.com.au,,Business Development Manager,manager,www.wisr.com.au,Wisr,http://www.linkedin.com/in/rumesh-gokarella-8aa38616b,2026-02-06T12:33:14.692257,2026-02-04T17:19:15.963580
+6116c6f706240500014bc97b,Wayne,Baskin,wayne@superhero.com.au,,"Co-Founder, CTO",founder,www.superhero.com.au,Superhero,http://www.linkedin.com/in/wbaskin,2026-02-06T12:33:14.726973,2026-02-04T17:19:18.988836
+6017df287683c300014dccb4,John,Rose,johnr@superhero.com.au,,Head of Data and Analytics,head,www.superhero.com.au,Superhero,http://www.linkedin.com/in/john-rose-42376414,2026-02-06T12:33:14.750553,2026-02-04T17:19:18.994351
+54a40c0574686938acfd6a28,Betty,Pang,betty@raizinvest.com.au,,Head of Risk and Compliance,head,www.raizinvest.com.au,Raiz Invest,http://www.linkedin.com/in/bettypang,2026-02-06T12:33:14.769386,2026-02-04T17:19:22.092139
+54a2ade674686930c2f01535,Marcin,Seroczynski,marcin@raizinvest.com.au,,Group CTO,c_suite,www.raizinvest.com.au,Raiz Invest,http://www.linkedin.com/in/seroczynski,2026-02-06T12:33:14.787571,2026-02-04T17:19:22.098064
+660e5fec2d983c0006d1ded1,LU,,,,Snr. Project Manager,,webull.com.au,Webull Securities Australia,,2026-02-06T10:00:19.504441,2026-02-04T17:19:25.233457
+62d134e35899370001599aac,Leon,Hu,,,Business Development Manager,manager,www.webull.com.au,Webull Securities Australia,http://www.linkedin.com/in/leon-hu-085326230,2026-02-06T12:33:14.804605,2026-02-04T17:19:25.240126
+61144b01b9da810001b3283d,Izolda,Ruga,,,Chief Technology Officer,c_suite,www.curve.com,Curve,http://www.linkedin.com/in/izolda-ruga-8073b41b0,2026-02-06T12:33:14.821314,2026-02-04T17:19:28.249929
+645cb8c289e67c00019fb2ab,Gordon,Moore,gordon.moore@curve.com,,Engineering Manager,manager,www.curve.com,Curve,http://www.linkedin.com/in/gordon-moore-326256252,2026-02-06T12:33:14.838729,2026-02-04T17:19:28.252284
+68d9ff57aef5150001e74f28,Rachel,,,,Project Manager,,curve.com,Curve,,2026-02-06T10:00:22.735110,2026-02-04T17:19:28.254572
+60f0864aaaf04600016485f0,Joseph,Vartuli,joseph.vartuli@creditorwatch.com.au,,Chief Technology Officer,c_suite,www.creditorwatch.com.au,CreditorWatch,http://www.linkedin.com/in/josephvartuli,2026-02-06T12:33:14.871414,2026-02-04T17:19:31.229366
+54a3253074686930c2bfe057,Dennis,Rappoport,dennis.rappoport@creditorwatch.com.au,,Head of Data,head,www.creditorwatch.com.au,CreditorWatch,http://www.linkedin.com/in/dennisrappoport,2026-02-06T12:33:18.787472,2026-02-04T17:19:31.235810
+54a2a2687468693cdd28a531,Arun,Baghel,arun.baghel@creditorwatch.com.au,,Engineering Manager,manager,www.creditorwatch.com.au,CreditorWatch,http://www.linkedin.com/in/arun-baghel,2026-02-06T12:33:18.824455,2026-02-04T17:19:31.241233
+557048347369643880ec6200,Vanja,Ivanovic,vanja.ivanovic@entsia.com,,Project Manager,manager,www.entsia.com,Entsia,http://www.linkedin.com/in/vanja-ivanovic-3795b258,2026-02-06T12:33:18.849557,2026-02-04T17:19:37.263816
+54a2282c74686930c241ae11,Pasquale,Campitiello,pasquale@entsia.com,,Delivery Manager / IT Program Manager,manager,www.entsia.com,Entsia,http://www.linkedin.com/in/pasqualecampitiello,2026-02-06T12:33:18.869767,2026-02-04T17:19:37.270709
+54a72f8a7468696220983a1d,Angela,,,,Project Delivery Manager,,entsia.com,Entsia,,2026-02-06T10:00:31.968656,2026-02-04T17:19:37.276388
+614081b18a189f000179a5be,Charbel,Ayoub,charbel.ayoub@pathzero.com,,Co-Founder and CTO,founder,www.pathzero.com,Pathzero,http://www.linkedin.com/in/charbel-ayoub-335ba852,2026-02-06T12:33:18.888684,2026-02-04T17:19:40.321921
 54a4ba6d7468692fa2dd0a5f,Michelle,,,,Project Manager,,experian.com.au,illion,,2026-02-04T17:27:43.940465,2026-02-04T17:27:43.940481
+57df3570a6da980b024bcab0,Desmond,,,,Project Manager,,inlogik.com,Inlogik,,2026-02-06T09:59:34.329202,2026-02-06T09:51:18.724862
+60d4e82929d699000199d140,Karl,,,,Engineering Manager,,zepto.com.au,Zepto,,2026-02-06T09:59:55.481667,2026-02-06T09:51:39.968479
+5ab287d7a6da98f78d79ed56,Christopher,Emery,,,Engineering Manager,manager,www.plenti.com.au,Plenti,http://www.linkedin.com/in/christopher-emery-037445106,2026-02-06T12:33:10.396324,2026-02-06T09:51:43.020288
+64eed5bdf463ca000101799d,Kate,Schade,kate.schade@judo.bank,,"General Manager, Strategy",manager,www.judo.bank,Judo Bank,http://www.linkedin.com/in/kate-schade-100ba488,2026-02-06T12:32:54.224024,2026-02-06T11:58:34.320313
+68885a38b67e150001e67b3d,Ashlee,Spicer,ashlee.spicer@illion.com.au,,Business Development Manager,manager,www.experian.com.au,illion,http://www.linkedin.com/in/ashlee-spicer-10386a40,2026-02-06T12:32:54.259354,2026-02-06T11:58:40.297679
+6686761ded25510001bbd938,Michael,Kafrouny,,,Business Development Manager,manager,www.lakeba.com,Lakeba,http://www.linkedin.com/in/michael-kafrouny-528b15233,2026-02-06T12:32:58.442018,2026-02-06T11:58:58.339103
+5e5c64342770720001fc6157,Eden,Skene,eden.skene@inlogik.com,,Business Development Manager,manager,www.inlogik.com,Inlogik,http://www.linkedin.com/in/eden-skene-714324173,2026-02-06T12:33:02.441024,2026-02-06T11:59:10.330217
+6272586cc64eaa0001a6006b,Dean,Cutajar,dean.cutajar@inlogik.com,,Business Development Manager,manager,www.inlogik.com,Inlogik,http://www.linkedin.com/in/dean-cutajar-93b4b7172,2026-02-06T12:33:02.451035,2026-02-06T11:59:10.336877
+62ec8ed2c2d6d50001faf190,Junaid,Ahmad,junaid.ahmad@imaginecurve.com,,Business Development Manager,manager,www.curve.com,Curve,http://www.linkedin.com/in/junaid-ahmad-311863122,2026-02-06T12:33:14.854846,2026-02-06T11:59:58.758197
