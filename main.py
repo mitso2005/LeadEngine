@@ -9,7 +9,7 @@ import time
 import os
 
 # Webhook URL for receiving phone numbers from Apollo
-WEBHOOK_URL = os.getenv("WEBHOOK_URL", "https://webhook.site/55dac724-e0b4-458e-8e20-b42ab21fb2b4")  # Replace with your webhook.site URL
+WEBHOOK_URL = os.getenv("WEBHOOK_URL", "https://webhook.site/55dac724-e0b4-458e-8e20-b42ab21fb2b4")
 
 def load_companies() -> dict:
     """Load companies from data/companies.json"""
