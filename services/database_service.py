@@ -47,10 +47,25 @@ class DatabaseService:
         
         return [dict(row) for row in rows]
     
+    # Replace the save_company_enrichment method:
     def save_company_enrichment(self, domain: str, apollo_data: Dict) -> Dict:
         """Save enriched company data from Apollo"""
         conn = self._get_connection()
         cursor = conn.cursor()
+        
+        # Calculate department headcounts from department_headcount_list
+        engineering_headcount = 0
+        it_headcount = 0
+        
+        if apollo_data.get('department_headcount_list'):
+            for dept in apollo_data['department_headcount_list']:
+                dept_name = dept.get('department', '').lower()
+                count = dept.get('count', 0)
+                
+                if 'engineering' in dept_name:
+                    engineering_headcount = count
+                elif 'information technology' in dept_name or dept_name == 'it':
+                    it_headcount = count
         
         cursor.execute('''
             UPDATE companies 
@@ -60,6 +75,8 @@ class DatabaseService:
                 address = ?,
                 annual_revenue = ?,
                 employee_count = ?,
+                engineering_headcount = ?,
+                it_headcount = ?,
                 short_description = ?,
                 enriched = TRUE,
                 updated_at = CURRENT_TIMESTAMP
@@ -71,6 +88,8 @@ class DatabaseService:
             apollo_data.get('raw_address'),
             apollo_data.get('estimated_annual_revenue'),
             apollo_data.get('estimated_num_employees'),
+            engineering_headcount,
+            it_headcount,
             apollo_data.get('short_description'),
             domain
         ))
@@ -114,7 +133,7 @@ class DatabaseService:
         conn.close()
     
     # ==================== PEOPLE METHODS ====================
-    
+
     def save_person(self, company_id: int, apollo_data: Dict) -> Dict:
         """Save person from Apollo search results"""
         conn = self._get_connection()
@@ -139,6 +158,52 @@ class DatabaseService:
         
         return self.get_person_by_apollo_id(apollo_data.get('id'))
     
+    def get_unenriched_people(self) -> List[Dict]:
+        """Get all people that haven't been enriched yet"""
+        conn = self._get_connection()
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT * FROM people WHERE enriched = FALSE
+        ''')
+        
+        rows = cursor.fetchall()
+        conn.close()
+        
+        return [dict(row) for row in rows]
+
+    # Replace the update_person_enrichment method:
+    def update_person_enrichment(self, apollo_id: str, apollo_data: Dict):
+        """Update person with enriched data (email, phone, LinkedIn, last_name)"""
+        conn = self._get_connection()
+        cursor = conn.cursor()
+        
+        # Extract phone number from phone_numbers array if present
+        phone = None
+        if apollo_data.get('phone_numbers'):
+            phone = apollo_data['phone_numbers'][0].get('sanitized_number')
+        
+        cursor.execute('''
+            UPDATE people
+            SET last_name = ?,
+                email = ?,
+                phone = ?,
+                linkedin_url = ?,
+                enriched = TRUE,
+                updated_at = CURRENT_TIMESTAMP
+            WHERE apollo_id = ?
+        ''', (
+            apollo_data.get('last_name'),
+            apollo_data.get('email'),
+            phone,
+            apollo_data.get('linkedin_url'),
+            apollo_id
+        ))
+        
+        conn.commit()
+        conn.close()
+
     def get_person_by_apollo_id(self, apollo_id: str) -> Optional[Dict]:
         """Get person by Apollo ID"""
         conn = self._get_connection()
@@ -155,49 +220,6 @@ class DatabaseService:
         if row:
             return dict(row)
         return None
-    
-    def get_unenriched_people(self) -> List[Dict]:
-        """Get all people that haven't been enriched yet"""
-        conn = self._get_connection()
-        conn.row_factory = sqlite3.Row
-        cursor = conn.cursor()
-        
-        cursor.execute('''
-            SELECT * FROM people WHERE enriched = FALSE
-        ''')
-        
-        rows = cursor.fetchall()
-        conn.close()
-        
-        return [dict(row) for row in rows]
-    
-    def update_person_enrichment(self, apollo_id: str, apollo_data: Dict):
-        """Update person with enriched data (email, phone, LinkedIn)"""
-        conn = self._get_connection()
-        cursor = conn.cursor()
-        
-        # Extract phone number from phone_numbers array if present
-        phone = None
-        if apollo_data.get('phone_numbers'):
-            phone = apollo_data['phone_numbers'][0].get('sanitized_number')
-        
-        cursor.execute('''
-            UPDATE people
-            SET email = ?,
-                phone = ?,
-                linkedin_url = ?,
-                enriched = TRUE,
-                updated_at = CURRENT_TIMESTAMP
-            WHERE apollo_id = ?
-        ''', (
-            apollo_data.get('email'),
-            phone,
-            apollo_data.get('linkedin_url'),
-            apollo_id
-        ))
-        
-        conn.commit()
-        conn.close()
     
     # ==================== STATS ====================
     

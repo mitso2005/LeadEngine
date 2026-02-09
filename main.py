@@ -1,4 +1,5 @@
 import json
+import sqlite3
 from pathlib import Path
 from services.apollo_client import ApolloClient, APOLLO_API_KEY
 from services.database_service import DatabaseService
@@ -14,19 +15,36 @@ def load_titles() -> List[str]:
     with open(titles_file, 'r') as f:
         return json.load(f)
 
-def enrich_companies(client: ApolloClient, db: DatabaseService):
+# ==================== CONFIGURATION ====================
+USE_CACHE = False  # Set to False to ignore cache and re-run all API calls
+# =======================================================
+
+# Update enrich_companies function:
+def enrich_companies(client: ApolloClient, db: DatabaseService, use_cache: bool = True):
     """
     Enrich companies that haven't been enriched yet
-    Uses cache - only calls API for unenriched companies
+    Uses cache - only calls API for unenriched companies (if use_cache=True)
     """
     print("\n=== ENRICHING COMPANIES ===")
     
-    # Get companies that need enrichment
-    companies_to_enrich = db.get_unenriched_companies()
-    
-    if not companies_to_enrich:
-        print("✅ All companies already enriched!")
-        return
+    if use_cache:
+        # Get companies that need enrichment
+        companies_to_enrich = db.get_unenriched_companies()
+        
+        if not companies_to_enrich:
+            print("✅ All companies already enriched!")
+            return
+    else:
+        # Get ALL companies, ignore enrichment status
+        conn = db._get_connection()
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM companies')
+        rows = cursor.fetchall()
+        companies_to_enrich = [dict(row) for row in rows]
+        conn.close()
+        
+        print(f"🔄 Force refresh enabled - re-enriching all companies")
     
     print(f"Found {len(companies_to_enrich)} companies to enrich")
     
@@ -61,19 +79,32 @@ def enrich_companies(client: ApolloClient, db: DatabaseService):
     
     print(f"\n✅ Company enrichment complete!")
 
-def search_people(client: ApolloClient, db: DatabaseService, titles: List[str], people_per_company: int = 5):
+# Update search_people function:
+def search_people(client: ApolloClient, db: DatabaseService, titles: List[str], people_per_company: int = 5, use_cache: bool = True):
     """
     Search for people at companies that need it
-    Uses cache - only searches if people_searched=FALSE or people_found_count < 5
+    Uses cache - only searches if people_searched=FALSE or people_found_count < 5 (if use_cache=True)
     """
     print(f"\n=== SEARCHING FOR PEOPLE ===")
     
-    # Get companies that need people search
-    companies_to_search = db.get_companies_needing_people_search()
-    
-    if not companies_to_search:
-        print("✅ All companies already have sufficient people!")
-        return
+    if use_cache:
+        # Get companies that need people search
+        companies_to_search = db.get_companies_needing_people_search()
+        
+        if not companies_to_search:
+            print("✅ All companies already have sufficient people!")
+            return
+    else:
+        # Get ALL enriched companies, ignore search status
+        conn = db._get_connection()
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM companies WHERE enriched = TRUE')
+        rows = cursor.fetchall()
+        companies_to_search = [dict(row) for row in rows]
+        conn.close()
+        
+        print(f"🔄 Force refresh enabled - re-searching all companies")
     
     print(f"Found {len(companies_to_search)} companies needing people search")
     
@@ -97,7 +128,7 @@ def search_people(client: ApolloClient, db: DatabaseService, titles: List[str], 
             
             for person_data in people:
                 person = db.save_person(company['company_id'], person_data)
-                print(f"    ✓ {person['first_name']} {person['last_name']} - {person['title']}")
+                print(f"    ✓ {person['first_name']} {person.get('last_name', '')} - {person['title']}")
             
             # Mark search as complete
             db.mark_people_search_complete(company['company_id'], len(people))
@@ -110,19 +141,32 @@ def search_people(client: ApolloClient, db: DatabaseService, titles: List[str], 
     
     print(f"\n✅ People search complete!")
 
-def enrich_people(client: ApolloClient, db: DatabaseService, reveal_contacts: bool = False, webhook_url: Optional[str] = None):
+# Update enrich_people function:
+def enrich_people(client: ApolloClient, db: DatabaseService, reveal_contacts: bool = False, webhook_url: Optional[str] = None, use_cache: bool = True):
     """
     Enrich people who haven't been enriched yet
-    Uses cache - only enriches if enriched=FALSE
+    Uses cache - only enriches if enriched=FALSE (if use_cache=True)
     """
     print(f"\n=== ENRICHING PEOPLE ===")
     
-    # Get people that need enrichment
-    people_to_enrich = db.get_unenriched_people()
-    
-    if not people_to_enrich:
-        print("✅ All people already enriched!")
-        return
+    if use_cache:
+        # Get people that need enrichment
+        people_to_enrich = db.get_unenriched_people()
+        
+        if not people_to_enrich:
+            print("✅ All people already enriched!")
+            return
+    else:
+        # Get ALL people, ignore enrichment status
+        conn = db._get_connection()
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM people')
+        rows = cursor.fetchall()
+        people_to_enrich = [dict(row) for row in rows]
+        conn.close()
+        
+        print(f"🔄 Force refresh enabled - re-enriching all people")
     
     print(f"Found {len(people_to_enrich)} people to enrich")
     
@@ -155,7 +199,8 @@ def enrich_people(client: ApolloClient, db: DatabaseService, reveal_contacts: bo
                     
                     email_status = "✓" if match_data.get('email') else "✗"
                     phone_status = "✓" if match_data.get('phone_numbers') else "✗"
-                    print(f"  {match_data['first_name']} {match_data['last_name']}: Email {email_status} | Phone {phone_status}")
+                    last_name = match_data.get('last_name', '')
+                    print(f"  {match_data['first_name']} {last_name}: Email {email_status} | Phone {phone_status}")
         else:
             print(f"  ✗ Error in batch: {result.get('error', 'Unknown error')}")
         
@@ -163,32 +208,34 @@ def enrich_people(client: ApolloClient, db: DatabaseService, reveal_contacts: bo
     
     print(f"\n✅ People enrichment complete!")
 
+# Update main function:
 def main():
     """Main orchestration with database caching"""
     print("Apollo Lead Engine Starting...")
     
     # Initialize services
     client = ApolloClient(api_key=APOLLO_API_KEY)
-    db = DatabaseService()  # Uses database instead of LocalDataStore
+    db = DatabaseService()
     
     # Load titles
     titles = load_titles()
     
     print(f"\n📊 Configuration:")
+    print(f"  Cache Mode: {'ENABLED ✓' if USE_CACHE else 'DISABLED - Force Refresh 🔄'}")
     stats = db.get_stats()
     print(f"  Total Companies: {stats['total_companies']}")
     print(f"  Enriched Companies: {stats['enriched_companies']}")
     print(f"  Total People: {stats['total_people']}")
     print(f"  Target titles: {len(titles)}")
     
-    # PHASE 1: Enrich companies (only unenriched ones)
-    enrich_companies(client, db)
+    # PHASE 1: Enrich companies
+    enrich_companies(client, db, use_cache=USE_CACHE)
     
-    # PHASE 2: Search for people (only companies needing search)
-    search_people(client, db, titles, people_per_company=5)
+    # PHASE 2: Search for people
+    search_people(client, db, titles, people_per_company=5, use_cache=USE_CACHE)
     
-    # PHASE 3: Enrich people (only unenriched ones)
-    enrich_people(client, db, reveal_contacts=True, webhook_url=WEBHOOK_URL)
+    # PHASE 3: Enrich people
+    enrich_people(client, db, reveal_contacts=True, webhook_url=WEBHOOK_URL, use_cache=USE_CACHE)
     
     # Final statistics
     print("\n" + "="*50)
