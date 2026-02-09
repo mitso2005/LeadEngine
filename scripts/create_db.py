@@ -21,6 +21,7 @@ create_companies_table = '''CREATE TABLE IF NOT EXISTS companies (
     short_description TEXT,
     people_found_count INTEGER DEFAULT 0,
     enriched BOOLEAN DEFAULT FALSE,
+    people_searched BOOLEAN DEFAULT FALSE,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 )'''
@@ -39,10 +40,28 @@ create_people_table = '''CREATE TABLE IF NOT EXISTS people (
     phone TEXT,
     email TEXT,
     linkedin_url TEXT,
-    enriched BOOLEAN DEFAULT FALSE
+    enriched BOOLEAN DEFAULT FALSE,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (company_id) REFERENCES companies(company_id)
 )'''
 
 cursor.execute(create_people_table)
+
+# Create indexes for faster lookups
+cursor.execute('CREATE INDEX IF NOT EXISTS idx_companies_apollo_id ON companies(apollo_id)')
+cursor.execute('CREATE INDEX IF NOT EXISTS idx_companies_enriched ON companies(enriched)')
+cursor.execute('CREATE INDEX IF NOT EXISTS idx_companies_people_searched ON companies(people_searched)')
+cursor.execute('CREATE INDEX IF NOT EXISTS idx_people_apollo_id ON people(apollo_id)')
+cursor.execute('CREATE INDEX IF NOT EXISTS idx_people_company_id ON people(company_id)')
+cursor.execute('CREATE INDEX IF NOT EXISTS idx_people_enriched ON people(enriched)')
+
+# Commit and close
+connection.commit()
+connection.close()
+
+print("✅ Database created successfully")
+print("📊 Cache logic:")
+print("   - Company enrichment: Check enriched = FALSE")
+print("   - People search: Check people_searched = FALSE AND people_found_count < 5")
+print("   - People enrichment: Check enriched = FALSE")
