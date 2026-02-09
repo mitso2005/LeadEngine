@@ -14,7 +14,7 @@ create_companies_table = '''CREATE TABLE IF NOT EXISTS companies (
     company_id INTEGER PRIMARY KEY AUTOINCREMENT,
     apollo_id TEXT UNIQUE,
     name TEXT NOT NULL,
-    domain TEXT,
+    domain TEXT UNIQUE NOT NULL,
     industry TEXT,
     city TEXT,
     address TEXT,
@@ -65,7 +65,7 @@ connection.commit()
 connection.close()
 
 print("✅ Database created successfully")
-print("📊 Cache logic:")
+print("Cache logic:")
 print("   - Company enrichment: Check enriched = FALSE")
 print("   - People search: Check people_searched = FALSE AND people_found_count < 5")
 print("   - People enrichment: Check enriched = FALSE")
