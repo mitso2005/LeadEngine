@@ -45,18 +45,6 @@ class ApolloClient:
     
     # ==================== ORGANIZATION ENRICHMENT ====================
     
-    def org_enrich(self, domain: str) -> Dict:
-        """
-        Enrich a single organization by domain
-        
-        Args:
-            domain: Company domain (e.g., "judo.bank")
-        
-        Returns:
-            Dict containing organization data
-        """
-        return self._make_request("GET", "organizations/enrich", params={"domain": domain})
-    
     def org_bulk_enrich(self, domains: List[str]) -> Dict:
         """
         Bulk enrich multiple organizations (up to 10 per request)
@@ -113,57 +101,6 @@ class ApolloClient:
         return self._make_request("POST", "mixed_people/api_search", data=data)
     
     # ==================== PEOPLE ENRICHMENT ====================
-    
-    def people_match(self, 
-                    first_name: Optional[str] = None,
-                    last_name: Optional[str] = None,
-                    organization_name: Optional[str] = None,
-                    domain: Optional[str] = None,
-                    email: Optional[str] = None,
-                    linkedin_url: Optional[str] = None,
-                    reveal_personal_emails: bool = False,
-                    reveal_phone_number: bool = False,
-                    webhook_url: Optional[str] = None) -> Dict:
-        """
-        Match and enrich a single person
-        
-        Args:
-            first_name: Person's first name
-            last_name: Person's last name
-            organization_name: Company name
-            domain: Company domain
-            email: Person's email
-            linkedin_url: Person's LinkedIn URL
-            reveal_personal_emails: Whether to reveal personal emails (uses credits)
-            reveal_phone_number: Whether to reveal phone numbers (uses credits)
-            webhook_url: Required when reveal_phone_number=True. URL where Apollo sends phone data
-        
-        Returns:
-            Dict containing person data
-        """
-        params = {
-            "reveal_personal_emails": str(reveal_personal_emails).lower(),
-            "reveal_phone_number": str(reveal_phone_number).lower()
-        }
-        
-        if webhook_url:
-            params["webhook_url"] = webhook_url
-        
-        data = {}
-        if first_name:
-            data["first_name"] = first_name
-        if last_name:
-            data["last_name"] = last_name
-        if organization_name:
-            data["organization_name"] = organization_name
-        if domain:
-            data["domain"] = domain
-        if email:
-            data["email"] = email
-        if linkedin_url:
-            data["linkedin_url"] = linkedin_url
-        
-        return self._make_request("POST", "people/match", data=data, params=params)
     
     def people_bulk_match(self, 
                          people: List[Dict],
