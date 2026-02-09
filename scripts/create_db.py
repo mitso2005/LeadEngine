@@ -1,8 +1,12 @@
-import sqlite3 
+import sqlite3
+import os
 from datetime import datetime
 
+# Define database path relative to project root
+db_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'database.db')
+
 # Define connection and cursor
-connection = sqlite3.connect('database.db')
+connection = sqlite3.connect(db_path)
 cursor = connection.cursor()
 
 # Create companies table
