@@ -100,6 +100,14 @@ class DatabaseService:
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         
+        ''' Can change this to:
+            SELECT * FROM companies 
+            WHERE enriched = TRUE 
+            AND (people_searched = FALSE or people_found_count < 10)
+
+            if we want to re-search companies that had few people found 
+            the first time or change the number of people found threshold
+        '''
         cursor.execute('''
             SELECT * FROM companies 
             WHERE enriched = TRUE 
