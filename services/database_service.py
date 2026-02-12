@@ -103,7 +103,7 @@ class DatabaseService:
         cursor.execute('''
             SELECT * FROM companies 
             WHERE enriched = TRUE 
-            AND (people_searched = FALSE OR people_found_count < 5)
+            AND (people_searched = FALSE)
         ''')
         
         rows = cursor.fetchall()

@@ -16,7 +16,7 @@ def load_titles() -> List[str]:
         return json.load(f)
 
 # ==================== CONFIGURATION ====================
-USE_CACHE = False  # Set to False to ignore cache and re-run all API calls
+USE_CACHE = True  # Set to False to ignore cache and re-run all API calls
 # =======================================================
 
 # Update enrich_companies function:
