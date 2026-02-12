@@ -61,6 +61,11 @@ class LocalDataStore:
         # Apollo returns organization data at the top level, not nested
         org = apollo_data
         
+        # Extract departmental headcounts
+        dept_headcount = org.get("departmental_head_count", {})
+        engineering_headcount = dept_headcount.get("engineering", 0) if dept_headcount else 0
+        it_headcount = dept_headcount.get("information_technology", 0) if dept_headcount else 0
+        
         company_record = {
             "domain": domain,
             "apollo_id": org.get("id"),  # Apollo organization ID for people search
@@ -72,8 +77,10 @@ class LocalDataStore:
             "raw_address": org.get("raw_address"),
             "city": org.get("city"),
             "short_description": org.get("short_description"),
-            "annual_revenue": org.get("organization_revenue"),  # Note: field name is organization_revenue
-            "departmental_headcount": org.get("departmental_head_count"),
+            "annual_revenue": org.get("organization_revenue"),
+            "engineering_headcount": engineering_headcount,
+            "information_technology_headcount": it_headcount,
+            "departmental_headcount": dept_headcount,  # Store full dict for reference
             "total_funding": org.get("total_funding"),
             "funding_events": org.get("funding_events"),
             "raw_apollo_data": apollo_data,  # Store the full response for future use
@@ -191,21 +198,26 @@ class LocalDataStore:
                 # Remove raw data
                 flat_copy.pop('raw_apollo_data', None)
                 
-                # Extract specific department headcounts as separate columns
+                # Handle departmental_headcount - ensure it's JSON string for CSV
                 dept_headcount = flat_copy.get('departmental_headcount', {})
                 if isinstance(dept_headcount, dict):
-                    flat_copy['engineering_headcount'] = dept_headcount.get('engineering', 0)
-                    flat_copy['information_technology_headcount'] = dept_headcount.get('information_technology', 0)
-                    # Keep the full JSON for reference
                     flat_copy['departmental_headcount'] = json.dumps(dept_headcount)
                 
                 # Flatten other lists/dicts
                 for key, value in flat_copy.items():
-                    if key not in ['departmental_headcount'] and isinstance(value, (list, dict)):
+                    if key not in ['departmental_headcount', 'engineering_headcount', 'information_technology_headcount'] and isinstance(value, (list, dict)):
                         flat_copy[key] = json.dumps(value)
                 
-                # Reorder to put funding fields at the end
-                ordered_copy = {k: v for k, v in flat_copy.items() if k not in ['total_funding', 'funding_events']}
+                # Reorder columns: put eng/IT headcounts before departmental_headcount, and funding fields at the end
+                ordered_copy = {}
+                for k, v in flat_copy.items():
+                    if k not in ['engineering_headcount', 'information_technology_headcount', 'departmental_headcount', 'total_funding', 'funding_events']:
+                        ordered_copy[k] = v
+                
+                # Add headcount columns in order
+                ordered_copy['engineering_headcount'] = flat_copy.get('engineering_headcount', 0)
+                ordered_copy['information_technology_headcount'] = flat_copy.get('information_technology_headcount', 0)
+                ordered_copy['departmental_headcount'] = flat_copy.get('departmental_headcount')
                 ordered_copy['total_funding'] = flat_copy.get('total_funding')
                 ordered_copy['funding_events'] = flat_copy.get('funding_events')
                 

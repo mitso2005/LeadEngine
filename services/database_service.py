@@ -53,19 +53,14 @@ class DatabaseService:
         conn = self._get_connection()
         cursor = conn.cursor()
         
-        # Calculate department headcounts from department_headcount_list
+        # Extract department headcounts from departmental_head_count dict
         engineering_headcount = 0
         it_headcount = 0
         
-        if apollo_data.get('department_headcount_list'):
-            for dept in apollo_data['department_headcount_list']:
-                dept_name = dept.get('department', '').lower()
-                count = dept.get('count', 0)
-                
-                if 'engineering' in dept_name:
-                    engineering_headcount = count
-                elif 'information technology' in dept_name or dept_name == 'it':
-                    it_headcount = count
+        dept_headcount = apollo_data.get('departmental_head_count', {})
+        if dept_headcount:
+            engineering_headcount = dept_headcount.get('engineering', 0)
+            it_headcount = dept_headcount.get('information_technology', 0)
         
         cursor.execute('''
             UPDATE companies 
@@ -86,7 +81,7 @@ class DatabaseService:
             apollo_data.get('industry'),
             apollo_data.get('city'),
             apollo_data.get('raw_address'),
-            apollo_data.get('estimated_annual_revenue'),
+            apollo_data.get('organization_revenue'),
             apollo_data.get('estimated_num_employees'),
             engineering_headcount,
             it_headcount,
