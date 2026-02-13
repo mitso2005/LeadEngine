@@ -15,15 +15,27 @@ with open(json_path, 'r') as f:
 connection = sqlite3.connect(db_path)
 cursor = connection.cursor()
 
+added = 0
+skipped = 0
+
 # Insert each company
 for name, domain in companies.items():
     cursor.execute('''
         INSERT OR IGNORE INTO companies (name, domain)
         VALUES (?, ?)
     ''', (name, domain))
-    print(f"✅ Added: {name} - {domain}")
+    
+    if cursor.rowcount > 0:
+        print(f"✅ Added: {name} - {domain}")
+        added += 1
+    else:
+        print(f"⏭️  Skipped (already exists): {name} - {domain}")
+        skipped += 1
 
 connection.commit()
 connection.close()
 
-print(f"\nTotal companies added: {len(companies)}")
+print(f"\n📊 Summary:")
+print(f"  Added: {added}")
+print(f"  Skipped: {skipped}")
+print(f"  Total in JSON: {len(companies)}")

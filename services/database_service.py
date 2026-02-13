@@ -62,6 +62,16 @@ class DatabaseService:
             engineering_headcount = dept_headcount.get('engineering', 0)
             it_headcount = dept_headcount.get('information_technology', 0)
         
+        apollo_id = apollo_data.get('id')
+        
+        # First, check if another company already has this apollo_id
+        cursor.execute('SELECT domain FROM companies WHERE apollo_id = ? AND domain != ?', (apollo_id, domain))
+        existing = cursor.fetchone()
+        
+        if existing:
+            # Another company has this apollo_id - clear it first to avoid constraint violation
+            cursor.execute('UPDATE companies SET apollo_id = NULL WHERE apollo_id = ? AND domain != ?', (apollo_id, domain))
+        
         cursor.execute('''
             UPDATE companies 
             SET apollo_id = ?,
@@ -77,7 +87,7 @@ class DatabaseService:
                 updated_at = CURRENT_TIMESTAMP
             WHERE domain = ?
         ''', (
-            apollo_data.get('id'),
+            apollo_id,
             apollo_data.get('industry'),
             apollo_data.get('city'),
             apollo_data.get('raw_address'),
