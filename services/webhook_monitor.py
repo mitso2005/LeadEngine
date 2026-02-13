@@ -27,7 +27,7 @@ class WebhookMonitor:
         """Update the expected number of batches (called from main.py)"""
         with self.lock:
             self.expected_batches = count
-            print(f"📞 Webhook Monitor: Expecting {count} batches")
+            print(f"Webhook Monitor: Expecting {count} batches")
     
     def start(self):
         """Start monitoring in a background thread"""
@@ -37,7 +37,7 @@ class WebhookMonitor:
         self.running = True
         self.thread = threading.Thread(target=self._monitor_loop, daemon=True)
         self.thread.start()
-        print("🎧 Webhook Monitor: Started listening for phone numbers...")
+        print("Webhook Monitor: Started listening for phone numbers...")
     
     def stop(self):
         """Stop monitoring"""
@@ -74,10 +74,10 @@ class WebhookMonitor:
                 files_processed = len(self.processed_files)
                 if self.expected_batches > 0 and files_processed >= self.expected_batches:
                     print(f"\n✅ All {files_processed} webhook batches processed!")
-                    print(f"📊 Total phone numbers added: {self.total_numbers_added}")
-                    self._cleanup_files()
-                    # Signal completion - stop monitoring
+                    print(f"Total phone numbers added: {self.total_numbers_added}")
+                    # Signal completion BEFORE cleanup (cleanup clears state)
                     self.running = False
+                    self._cleanup_files()
     
     def _process_file(self, filepath: Path):
         """Process a single webhook JSON file"""
@@ -103,7 +103,7 @@ class WebhookMonitor:
             with self.lock:
                 self.total_numbers_added += count
             
-            print(f"📞 Processed {filepath.name}: {count} phone numbers added ({len(self.processed_files) + 1}/{self.expected_batches if self.expected_batches > 0 else '?'})")
+            print(f"Processed {filepath.name}: {count} phone numbers added ({len(self.processed_files) + 1}/{self.expected_batches if self.expected_batches > 0 else '?'})")
             
         except json.JSONDecodeError as e:
             print(f"⚠️  JSON error in {filepath.name}: {e}")
@@ -146,7 +146,7 @@ class WebhookMonitor:
                 self.processed_files.clear()
                 self.expected_batches = 0
             
-            print(f"🧹 Cleaned up {file_count} webhook files")
+            print(f"Cleaned up {file_count} webhook files")
             
         except Exception as e:
             print(f"⚠️  Cleanup error: {e}")

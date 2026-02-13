@@ -17,7 +17,7 @@ def load_titles() -> List[str]:
         return json.load(f)
 
 # ==================== CONFIGURATION ====================
-USE_CACHE = True  # Set to False to ignore cache and re-run all API calls
+USE_CACHE = False  # Set to False to ignore cache and re-run all API calls
 # =======================================================
 
 # Update enrich_companies function:
@@ -45,7 +45,7 @@ def enrich_companies(client: ApolloClient, db: DatabaseService, use_cache: bool 
         companies_to_enrich = [dict(row) for row in rows]
         conn.close()
         
-        print(f"🔄 Force refresh enabled - re-enriching all companies")
+        print(f"Force refresh enabled - re-enriching all companies")
     
     print(f"Found {len(companies_to_enrich)} companies to enrich")
     
@@ -105,7 +105,7 @@ def search_people(client: ApolloClient, db: DatabaseService, titles: List[str], 
         companies_to_search = [dict(row) for row in rows]
         conn.close()
         
-        print(f"🔄 Force refresh enabled - re-searching all companies")
+        print(f"Force refresh enabled - re-searching all companies")
     
     print(f"Found {len(companies_to_search)} companies needing people search")
     
@@ -167,13 +167,12 @@ def enrich_people(client: ApolloClient, db: DatabaseService, reveal_contacts: bo
         people_to_enrich = [dict(row) for row in rows]
         conn.close()
         
-        print(f"🔄 Force refresh enabled - re-enriching all people")
+        print(f"Force refresh enabled - re-enriching all people")
     
     print(f"Found {len(people_to_enrich)} people to enrich")
     
     if reveal_contacts:
-        print(f"📞 Phone numbers will be sent to: {webhook_url}")
-        print(f"⚠️  This will use API credits!")
+        print(f"Phone numbers will be sent to: {webhook_url}")
     
     # Batch process (10 per batch - API limit)
     batch_size = 10
@@ -203,9 +202,8 @@ def enrich_people(client: ApolloClient, db: DatabaseService, reveal_contacts: bo
                     db.update_person_enrichment(apollo_id, match_data)
                     
                     email_status = "✓" if match_data.get('email') else "✗"
-                    phone_status = "✓" if match_data.get('phone_numbers') else "✗"
                     last_name = match_data.get('last_name', '')
-                    print(f"  {match_data['first_name']} {last_name}: Email {email_status} | Phone {phone_status}")
+                    print(f"  {match_data['first_name']} {last_name}: Email {email_status}")
         else:
             print(f"  ✗ Error in batch: {result.get('error', 'Unknown error')}")
         
@@ -229,8 +227,8 @@ def main():
     # Load titles
     titles = load_titles()
     
-    print(f"\n📊 Configuration:")
-    print(f"  Cache Mode: {'ENABLED ✓' if USE_CACHE else 'DISABLED - Force Refresh 🔄'}")
+    print(f"\nConfiguration:")
+    print(f"  Cache Mode: {'ENABLED ✓' if USE_CACHE else 'DISABLED - Force Refresh'}")
     stats = db.get_stats()
     print(f"  Total Companies: {stats['total_companies']}")
     print(f"  Enriched Companies: {stats['enriched_companies']}")
