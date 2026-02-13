@@ -3,11 +3,12 @@ import sqlite3
 from pathlib import Path
 from services.apollo_client import ApolloClient, APOLLO_API_KEY
 from services.database_service import DatabaseService
+from services.webhook_monitor import WebhookMonitor
 from typing import List, Optional
 import time
 import os
 
-WEBHOOK_URL = os.getenv("WEBHOOK_URL", "https://webhook.site/55dac724-e0b4-458e-8e20-b42ab21fb2b4")
+WEBHOOK_URL = os.getenv("WEBHOOK_URL")
 
 def load_titles() -> List[str]:
     """Load titles from data/titles.json"""
@@ -142,7 +143,7 @@ def search_people(client: ApolloClient, db: DatabaseService, titles: List[str], 
     print(f"\n✅ People search complete!")
 
 # Update enrich_people function:
-def enrich_people(client: ApolloClient, db: DatabaseService, reveal_contacts: bool = False, webhook_url: Optional[str] = None, use_cache: bool = True):
+def enrich_people(client: ApolloClient, db: DatabaseService, reveal_contacts: bool = False, webhook_url: Optional[str] = None, use_cache: bool = True, webhook_monitor: Optional[WebhookMonitor] = None):
     """
     Enrich people who haven't been enriched yet
     Uses cache - only enriches if enriched=FALSE (if use_cache=True)
@@ -177,6 +178,10 @@ def enrich_people(client: ApolloClient, db: DatabaseService, reveal_contacts: bo
     # Batch process (10 per batch - API limit)
     batch_size = 10
     batches = [people_to_enrich[i:i + batch_size] for i in range(0, len(people_to_enrich), batch_size)]
+    
+    # Notify webhook monitor of expected batches if phone numbers are being revealed
+    if reveal_contacts and webhook_monitor:
+        webhook_monitor.set_expected_batches(len(batches))
     
     for idx, batch in enumerate(batches, 1):
         print(f"\nBatch {idx}/{len(batches)}: {len(batch)} people")
@@ -216,6 +221,10 @@ def main():
     # Initialize services
     client = ApolloClient(api_key=APOLLO_API_KEY)
     db = DatabaseService()
+    webhook_monitor = WebhookMonitor()
+    
+    # Start webhook monitor in background
+    webhook_monitor.start()
     
     # Load titles
     titles = load_titles()
@@ -235,7 +244,15 @@ def main():
     search_people(client, db, titles, people_per_company=5, use_cache=USE_CACHE)
     
     # PHASE 3: Enrich people
-    enrich_people(client, db, reveal_contacts=True, webhook_url=WEBHOOK_URL, use_cache=USE_CACHE)
+    enrich_people(client, db, reveal_contacts=True, webhook_url=WEBHOOK_URL, use_cache=USE_CACHE, webhook_monitor=webhook_monitor)
+    
+    # Wait for webhook monitor to finish processing all phone numbers
+    if webhook_monitor.expected_batches > 0:
+        print("\n⏳ Waiting for all webhook phone numbers to be processed...")
+        webhook_monitor.wait_for_completion(timeout=120)
+    
+    # Stop webhook monitor
+    webhook_monitor.stop()
     
     # Final statistics
     print("\n" + "="*50)
