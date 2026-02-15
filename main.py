@@ -120,7 +120,8 @@ def search_people(client: ApolloClient, db: DatabaseService, titles: List[str], 
         result = client.people_search(
             organization_ids=[apollo_id],
             person_titles=titles,
-            per_page=people_per_company
+            per_page=people_per_company,
+            person_locations=["Australia"]  # Filter for Australian employees only
         )
         
         if "error" not in result and "people" in result:
