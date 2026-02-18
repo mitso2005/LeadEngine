@@ -75,6 +75,7 @@ class DatabaseService:
         cursor.execute('''
             UPDATE companies 
             SET apollo_id = ?,
+                name = ?,
                 industry = ?,
                 city = ?,
                 address = ?,
@@ -88,6 +89,7 @@ class DatabaseService:
             WHERE domain = ?
         ''', (
             apollo_id,
+            apollo_data.get('name'),
             apollo_data.get('industry'),
             apollo_data.get('city'),
             apollo_data.get('raw_address'),
