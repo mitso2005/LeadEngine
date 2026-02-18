@@ -1,10 +1,13 @@
 from dotenv import load_dotenv
 import os
 import requests
-import json
+import urllib3
 from typing import Dict, List, Optional, Any
 from datetime import datetime
 import time
+
+# Disable SSL warnings
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 load_dotenv()
 APOLLO_API_KEY = os.getenv("APOLLO_API_KEY")
@@ -25,14 +28,17 @@ class ApolloClient:
     def _make_request(self, method: str, endpoint: str, data: Optional[Dict] = None, params: Optional[Dict] = None) -> Dict:
         """Make API request with rate limiting and error handling"""
         url = f"{self.BASE_URL}/{endpoint}"
+
+        # DISABLE SSL VERIFICATION
+        kwargs = {'verify': False}
         
         try:
             time.sleep(self.rate_limit_delay)  # Rate limiting
             
             if method.upper() == "GET":
-                response = requests.get(url, headers=self.headers, params=params)
+                response = requests.get(url, headers=self.headers, params=params, **kwargs)
             else:
-                response = requests.post(url, headers=self.headers, json=data, params=params)
+                response = requests.post(url, headers=self.headers, json=data, params=params, **kwargs)
             
             response.raise_for_status()
             return response.json()
