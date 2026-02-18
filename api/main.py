@@ -212,7 +212,9 @@ async def root():
         "endpoints": {
             "GET /enrich/custom": "Enrich with custom domains, titles, and max results",
             "POST /enrich/default": "Enrich with default financial services data",
-            "GET /stats": "Get database statistics"
+            "GET /stats": "Get database statistics",
+            "GET /people": "Get all people from database",
+            "GET /companies": "Get all companies from database"
         }
     }
 
@@ -236,3 +238,47 @@ async def get_stats():
         "total_people": stats[2],
         "enriched_people": stats[3]
     }
+
+
+@app.get("/people")
+async def get_all_people():
+    """Get all people from the database"""
+    try:
+        conn = db._get_connection()
+        conn.row_factory = lambda cursor, row: {
+            col[0]: row[idx] for idx, col in enumerate(cursor.description)
+        }
+        people = conn.execute('''
+            SELECT * FROM people
+            ORDER BY updated_at DESC
+        ''').fetchall()
+        conn.close()
+        
+        return {
+            "count": len(people),
+            "people": people
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/companies")
+async def get_all_companies():
+    """Get all companies from the database"""
+    try:
+        conn = db._get_connection()
+        conn.row_factory = lambda cursor, row: {
+            col[0]: row[idx] for idx, col in enumerate(cursor.description)
+        }
+        companies = conn.execute('''
+            SELECT * FROM companies
+            ORDER BY updated_at DESC
+        ''').fetchall()
+        conn.close()
+        
+        return {
+            "count": len(companies),
+            "companies": companies
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
