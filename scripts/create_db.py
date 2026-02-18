@@ -26,6 +26,7 @@ create_companies_table = '''CREATE TABLE IF NOT EXISTS companies (
     people_found_count INTEGER DEFAULT 0,
     enriched BOOLEAN DEFAULT FALSE,
     people_searched BOOLEAN DEFAULT FALSE,
+    searched_titles TEXT,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 )'''

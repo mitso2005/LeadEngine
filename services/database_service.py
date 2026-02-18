@@ -1,5 +1,6 @@
 import sqlite3
 import os
+import json
 from typing import Dict, List, Optional
 from datetime import datetime
 
@@ -131,18 +132,53 @@ class DatabaseService:
         
         return [dict(row) for row in rows]
     
-    def mark_people_search_complete(self, company_id: int, people_count: int):
-        """Mark that people search was completed for a company"""
+    def needs_title_search(self, company_id: int, titles: List[str]) -> bool:
+        """Check if any of the titles haven't been searched for this company yet"""
         conn = self._get_connection()
         cursor = conn.cursor()
+        
+        cursor.execute('SELECT searched_titles FROM companies WHERE company_id = ?', (company_id,))
+        result = cursor.fetchone()
+        conn.close()
+        
+        if not result or not result[0]:
+            return True  # No titles searched yet
+        
+        # Normalize titles for comparison (lowercase, strip)
+        searched_titles = set(t.lower().strip() for t in json.loads(result[0]))
+        requested_titles = set(t.lower().strip() for t in titles)
+        
+        # Return True if there are any new titles
+        return not requested_titles.issubset(searched_titles)
+    
+    def mark_people_search_complete(self, company_id: int, people_count: int, titles: List[str] = None):
+        """Mark that people search was completed for a company and update searched titles"""
+        conn = self._get_connection()
+        cursor = conn.cursor()
+        
+        # Get existing searched titles
+        cursor.execute('SELECT searched_titles FROM companies WHERE company_id = ?', (company_id,))
+        result = cursor.fetchone()
+        
+        existing_titles = set()
+        if result and result[0]:
+            existing_titles = set(t.lower().strip() for t in json.loads(result[0]))
+        
+        # Add new titles (normalized)
+        if titles:
+            existing_titles.update(t.lower().strip() for t in titles)
+        
+        # Save back as JSON
+        titles_json = json.dumps(list(existing_titles))
         
         cursor.execute('''
             UPDATE companies
             SET people_searched = TRUE,
                 people_found_count = ?,
+                searched_titles = ?,
                 updated_at = CURRENT_TIMESTAMP
             WHERE company_id = ?
-        ''', (people_count, company_id))
+        ''', (people_count, titles_json, company_id))
         
         conn.commit()
         conn.close()

@@ -74,8 +74,39 @@ async def enrich_custom(
         # Step 3: Enrich companies using the existing function
         enrich_companies(apollo_client, db, use_cache=True)
         
-        # Step 4: Search for people using the existing function
-        search_people(apollo_client, db, title_list, people_per_company=max_results, use_cache=True)
+        # Step 4: Search for people - smart caching based on titles
+        # Only search companies that haven't been searched with these specific titles
+        for domain in domain_list:
+            company = db.get_company_by_domain(domain)
+            if not company or not company.get('apollo_id'):
+                continue
+            
+            # Check if we need to search for these titles
+            if db.needs_title_search(company['company_id'], title_list):
+                print(f"Searching {company['name']} for new titles: {title_list}")
+                
+                result = apollo_client.people_search(
+                    organization_ids=[company['apollo_id']],
+                    person_titles=title_list,
+                    per_page=max_results,
+                    person_locations=["Australia"]
+                )
+                
+                if "error" not in result and "people" in result:
+                    people = result["people"]
+                    print(f"  Found {len(people)} people")
+                    
+                    for person_data in people:
+                        person = db.save_person(company['company_id'], person_data)
+                        print(f"    ✓ {person['first_name']} {person.get('last_name', '')} - {person['title']}")
+                    
+                    # Mark search as complete with these titles
+                    db.mark_people_search_complete(company['company_id'], len(people), title_list)
+                else:
+                    print(f"  ✗ Error: {result.get('error', 'Unknown error')}")
+                    db.mark_people_search_complete(company['company_id'], 0, title_list)
+            else:
+                print(f"✓ Using cached results for {company['name']} - titles already searched")
         
         # Step 5: Enrich people using the existing function
         enrich_people(apollo_client, db, reveal_contacts=True, webhook_url=WEBHOOK_URL, webhook_monitor=webhook_monitor, use_cache=True)
