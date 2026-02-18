@@ -13,7 +13,7 @@ cursor = connection.cursor()
 create_companies_table = '''CREATE TABLE IF NOT EXISTS companies (
     company_id INTEGER PRIMARY KEY AUTOINCREMENT,
     apollo_id TEXT UNIQUE,
-    name TEXT NOT NULL,
+    name TEXT,
     domain TEXT UNIQUE NOT NULL,
     industry TEXT,
     city TEXT,
