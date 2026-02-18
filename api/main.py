@@ -245,7 +245,8 @@ async def root():
             "POST /enrich/default": "Enrich with default financial services data",
             "GET /stats": "Get database statistics",
             "GET /people": "Get all people from database",
-            "GET /companies": "Get all companies from database"
+            "GET /companies": "Get all companies from database",
+            "DELETE /companies/{domain}": "Delete a company and all its people by domain"
         }
     }
 
@@ -311,5 +312,38 @@ async def get_all_companies():
             "count": len(companies),
             "companies": companies
         }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.delete("/companies/{domain}")
+async def delete_company(domain: str):
+    """Delete a company and all associated people by domain"""
+    try:
+        # Get company
+        company = db.get_company_by_domain(domain)
+        if not company:
+            raise HTTPException(status_code=404, detail=f"Company with domain '{domain}' not found")
+        
+        conn = db._get_connection()
+        cursor = conn.cursor()
+        
+        # Delete all people associated with this company
+        cursor.execute('DELETE FROM people WHERE company_id = ?', (company['company_id'],))
+        people_deleted = cursor.rowcount
+        
+        # Delete the company
+        cursor.execute('DELETE FROM companies WHERE company_id = ?', (company['company_id'],))
+        
+        conn.commit()
+        conn.close()
+        
+        return {
+            "message": f"Successfully deleted company '{company.get('name', domain)}'",
+            "domain": domain,
+            "people_deleted": people_deleted
+        }
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

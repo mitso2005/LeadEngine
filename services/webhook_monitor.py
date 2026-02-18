@@ -34,6 +34,14 @@ class WebhookMonitor:
         if self.running:
             return
         
+        # Clean up any old webhook files from previous runs
+        self._cleanup_old_files()
+        
+        # Reset state for new monitoring session
+        with self.lock:
+            self.processed_files.clear()
+            self.total_numbers_added = 0
+        
         self.running = True
         self.thread = threading.Thread(target=self._monitor_loop, daemon=True)
         self.thread.start()
@@ -146,10 +154,21 @@ class WebhookMonitor:
                 self.processed_files.clear()
                 self.expected_batches = 0
             
-            print(f"Cleaned up {file_count} webhook files")
+            print(f"🗑️  Cleaned up {file_count} webhook files")
             
         except Exception as e:
             print(f"⚠️  Cleanup error: {e}")
+    
+    def _cleanup_old_files(self):
+        """Remove old webhook files at startup"""
+        try:
+            old_files = list(self.webhook_dir.glob("*.json"))
+            if old_files:
+                for file in old_files:
+                    file.unlink()
+                print(f"🗑️  Cleaned up {len(old_files)} old webhook files from previous run")
+        except Exception as e:
+            print(f"⚠️  Old file cleanup error: {e}")
     
     def wait_for_completion(self, timeout: int = 300):
         """
