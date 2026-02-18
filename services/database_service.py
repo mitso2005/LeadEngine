@@ -203,6 +203,9 @@ class DatabaseService:
                 email = ?,
                 phone = ?,
                 linkedin_url = ?,
+                city = ?,
+                state = ?,
+                country = ?,
                 enriched = TRUE,
                 updated_at = CURRENT_TIMESTAMP
             WHERE apollo_id = ?
@@ -211,6 +214,9 @@ class DatabaseService:
             apollo_data.get('email'),
             phone,
             apollo_data.get('linkedin_url'),
+            apollo_data.get('city'),
+            apollo_data.get('state'),
+            apollo_data.get('country'),
             apollo_id
         ))
         

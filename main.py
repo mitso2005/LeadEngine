@@ -243,7 +243,7 @@ def main():
     search_people(client, db, titles, people_per_company=5, use_cache=USE_CACHE)
     
     # PHASE 3: Enrich people
-    enrich_people(client, db, reveal_contacts=True, webhook_url=WEBHOOK_URL, use_cache=USE_CACHE, webhook_monitor=webhook_monitor)
+    enrich_people(client, db, reveal_contacts=True, webhook_url=WEBHOOK_URL, use_cache=False, webhook_monitor=webhook_monitor)
     
     # Wait for webhook monitor to finish processing all phone numbers
     if webhook_monitor.expected_batches > 0:
