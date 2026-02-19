@@ -246,7 +246,7 @@ async def root():
             "GET /stats": "Get database statistics",
             "GET /people": "Get all people from database",
             "GET /companies": "Get all companies from database",
-            "DELETE /companies/{domain}": "Delete a company and all its people by domain"
+            "DELETE /companies?domain=example.com": "Delete a company and all its people"
         }
     }
 
@@ -316,9 +316,9 @@ async def get_all_companies():
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.delete("/companies/{domain}")
+@app.delete("/companies")
 async def delete_company(domain: str):
-    """Delete a company and all associated people by domain"""
+    """Delete a company and all associated people by domain (query parameter version)"""
     try:
         # Get company
         company = db.get_company_by_domain(domain)
