@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 import sys
 from pathlib import Path
@@ -19,6 +20,14 @@ from services.webhook_monitor import WebhookMonitor
 from main import enrich_companies, search_people, enrich_people, load_titles
 
 app = FastAPI(title="LeadEngine API", version="1.0.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://localhost:5173"],  # React dev servers
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, DELETE, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
 
 # Initialize services
 APOLLO_API_KEY = os.getenv("APOLLO_API_KEY")
