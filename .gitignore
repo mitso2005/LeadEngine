@@ -209,3 +209,5 @@ __marimo__/
 # Data
 webhook_endpoint_data/
 exports/
+companies.csv
+people.csv
