@@ -22,6 +22,7 @@ class WebhookMonitor:
         self.thread = None
         self.lock = threading.Lock()
         self.total_numbers_added = 0
+        self._completion_event = threading.Event()
         
     def set_expected_batches(self, count: int):
         """Update the expected number of batches (called from main.py)"""
@@ -41,6 +42,7 @@ class WebhookMonitor:
         with self.lock:
             self.processed_files.clear()
             self.total_numbers_added = 0
+        self._completion_event.clear()
         
         self.running = True
         self.thread = threading.Thread(target=self._monitor_loop, daemon=True)
@@ -80,12 +82,14 @@ class WebhookMonitor:
             # Check if we've received all expected batches
             with self.lock:
                 files_processed = len(self.processed_files)
-                if self.expected_batches > 0 and files_processed >= self.expected_batches:
-                    print(f"\n✅ All {files_processed} webhook batches processed!")
-                    print(f"Total phone numbers added: {self.total_numbers_added}")
-                    # Signal completion BEFORE cleanup (cleanup clears state)
-                    self.running = False
-                    self._cleanup_files()
+                all_done = self.expected_batches > 0 and files_processed >= self.expected_batches
+
+            if all_done:
+                print(f"\n✅ All {files_processed} webhook batches processed!")
+                print(f"Total phone numbers added: {self.total_numbers_added}")
+                self._completion_event.set()
+                self.running = False
+                self._cleanup_files()
     
     def _process_file(self, filepath: Path):
         """Process a single webhook JSON file"""
@@ -177,17 +181,7 @@ class WebhookMonitor:
         Args:
             timeout: Maximum seconds to wait (default 5 minutes)
         """
-        start_time = time.time()
-        
-        while self.running:
-            with self.lock:
-                if self.expected_batches > 0 and len(self.processed_files) >= self.expected_batches:
-                    return True
-            
-            if time.time() - start_time > timeout:
-                print(f"⏱️  Webhook Monitor: Timeout waiting for batches")
-                return False
-            
-            time.sleep(1)
-        
-        return False
+        completed = self._completion_event.wait(timeout=timeout)
+        if not completed:
+            print(f"⏱️  Webhook Monitor: Timeout waiting for batches")
+        return completed
