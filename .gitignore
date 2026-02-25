@@ -211,3 +211,4 @@ webhook_endpoint_data/
 exports/
 companies.csv
 people.csv
+data/database.db
